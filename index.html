@@ -5359,7 +5359,7 @@ function siteDesenhar(iv){
   const ch = document.createElement("div"); ch.className = "site-chave";
   const tx = document.createElement("p"); const ligado = siteCfg.contar_recursos !== false;
   tx.textContent = ligado ? "Ligado: os cliques em Recursos estão sendo contados." : "Desligado: os cliques em Recursos não são mais contados (os já registrados continuam aqui).";
-  const bt = document.createElement("button"); bt.type = "button"; bt.className = "btn " + (ligado ? "btn-ghost" : "btn-primary"); bt.style.flex = "none";
+  const bt = document.createElement("button"); bt.type = "button"; bt.className = "btn " + (ligado ? "btn-ghost" : "btn-primary"); bt.style.cssText = "flex:none;width:auto;min-width:110px;";
   bt.textContent = ligado ? "Desligar" : "Ligar";
   bt.onclick = async () => {
     bt.disabled = true;
