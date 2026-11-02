@@ -2372,15 +2372,15 @@
 <div class="modal-wrap" id="modal-cli-dados" data-fixo="1" style="z-index:70;">
   <div class="modal">
     <h3>Ajustar dados do ambiente</h3>
-    <div class="field"><label for="cad-nome-amb">Nome do ambiente *</label><input type="text" id="cad-nome-amb" maxlength="120" autocomplete="off"></div>
+    <div class="field"><label for="cad-nome-amb">Nome do ambiente *</label><input type="text" id="cad-nome-amb" name="cad-nome-amb-x" data-lpignore="true" data-1p-ignore maxlength="120" autocomplete="off"></div>
     <p class="dev-dica" style="margin:-6px 0 10px;">O código do link não muda aqui: ele é o endereço de entrada de quem já usa.</p>
-    <div class="field"><label for="cad-doc">CNPJ ou CPF</label><input type="text" id="cad-doc" inputmode="numeric" autocomplete="off" oninput="cliMascaraDoc(this)"></div>
+    <div class="field"><label for="cad-doc">CNPJ ou CPF</label><input type="text" id="cad-doc" name="cad-doc-x" data-lpignore="true" data-1p-ignore inputmode="numeric" autocomplete="one-time-code" oninput="cliMascaraDoc(this)"></div>
     <div class="cob-duas">
-      <div class="field"><label for="cad-cidade">Cidade</label><input type="text" id="cad-cidade" maxlength="80" autocomplete="off"></div>
-      <div class="field"><label for="cad-uf">UF</label><input type="text" id="cad-uf" maxlength="2" autocomplete="off" autocapitalize="characters" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/g,'')"></div>
+      <div class="field"><label for="cad-cidade">Cidade</label><input type="text" id="cad-cidade" name="cad-cidade-x" data-lpignore="true" data-1p-ignore maxlength="80" autocomplete="off"></div>
+      <div class="field"><label for="cad-uf">UF</label><input type="text" id="cad-uf" name="cad-uf-x" data-lpignore="true" data-1p-ignore maxlength="2" autocomplete="off" autocapitalize="characters" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/g,'')"></div>
     </div>
-    <div class="field"><label for="cad-whats">WhatsApp do ambiente</label><input type="text" id="cad-whats" placeholder="(00) 00000-0000" inputmode="tel" autocomplete="off" oninput="mascararTelefoneZelador(this)"></div>
-    <div class="field"><label for="cad-email">E-mail do ambiente</label><input type="email" id="cad-email" maxlength="120" autocomplete="off" autocapitalize="none"></div>
+    <div class="field"><label for="cad-whats">WhatsApp do ambiente</label><input type="text" id="cad-whats" name="cad-whats-x" data-lpignore="true" data-1p-ignore placeholder="(00) 00000-0000" inputmode="tel" autocomplete="off" oninput="mascararTelefoneZelador(this)"></div>
+    <div class="field"><label for="cadj-email">E-mail do ambiente</label><input type="text" id="cadj-email" name="cad-email-amb" inputmode="email" maxlength="120" autocomplete="one-time-code" autocapitalize="none" spellcheck="false" data-lpignore="true" data-1p-ignore></div>
     <button class="btn btn-primary btn-linha" id="cad-btn" onclick="cliSalvarDados()"><i class="ti ti-check"></i> Salvar</button>
     <button class="btn btn-ghost btn-linha" onclick="fecharModal('modal-cli-dados')">Cancelar</button>
   </div>
@@ -2391,8 +2391,8 @@
   <div class="modal">
     <h3>Ajustar usuário</h3>
     <p class="dev-dica" style="margin:0 0 10px;">Login: <b id="cau-email"></b>. O e-mail não muda por aqui.</p>
-    <div class="field"><label for="cau-nome">Nome *</label><input type="text" id="cau-nome" maxlength="120" autocomplete="off"></div>
-    <div class="field"><label for="cau-cel">Celular com DDD (WhatsApp)</label><input type="text" id="cau-cel" placeholder="(00) 00000-0000" inputmode="tel" autocomplete="off" oninput="mascararTelefoneZelador(this)"></div>
+    <div class="field"><label for="cau-nome">Nome *</label><input type="text" id="cau-nome" name="cau-nome-x" data-lpignore="true" data-1p-ignore maxlength="120" autocomplete="off"></div>
+    <div class="field"><label for="cau-cel">Celular com DDD (WhatsApp)</label><input type="text" id="cau-cel" name="cau-cel-x" data-lpignore="true" data-1p-ignore placeholder="(00) 00000-0000" inputmode="tel" autocomplete="off" oninput="mascararTelefoneZelador(this)"></div>
     <div class="field"><label>Tipo *</label>
       <div class="cob-seg" id="cau-tipo">
         <button type="button" data-v="supervisora" onclick="cliCauTipo('supervisora')">Supervisora</button>
@@ -2688,7 +2688,7 @@ const EMAILJS_PUBLIC_KEY  = "PvKWTDB521UOqFeHX";
 const EMAILJS_SERVICE_ID  = "service_k2qfuuk";
 const EMAILJS_TEMPLATE_ID = "template_pmlppjg";
 
-const VERSAO_APP = "2026020001";   // Ajustes do ambiente (dados, usuários e senha nova)
+const VERSAO_APP = "2026020002";   // Ajustes do ambiente: sem autopreenchimento do navegador
 
 /* ===================================================================== */
 
@@ -4149,19 +4149,19 @@ window.cliAbrirDados = function(){
   const x = cliDetAtual.dados || {};
   const set = (id, v) => { document.getElementById(id).value = v || ""; };
   set("cad-nome-amb", cliDetAtual.nome); set("cad-doc", x.cnpj); set("cad-cidade", x.cidade); set("cad-uf", x.uf);
-  set("cad-whats", x.whatsapp ? formatarCelular(x.whatsapp) : ""); set("cad-email", x.email);
+  set("cad-whats", x.whatsapp ? formatarCelular(x.whatsapp) : ""); set("cadj-email", x.email);
   abrirModal("modal-cli-dados");
 };
 window.cliSalvarDados = async function(){
   const it = cliDetAtual; if(!it) return;
   const v = id => document.getElementById(id).value.trim();
-  const nome = v("cad-nome-amb").replace(/\s+/g, " "), doc = v("cad-doc"), cidade = v("cad-cidade"), uf = v("cad-uf").toUpperCase(), whats = v("cad-whats"), email = v("cad-email").toLowerCase();
+  const nome = v("cad-nome-amb").replace(/\s+/g, " "), doc = v("cad-doc"), cidade = v("cad-cidade"), uf = v("cad-uf").toUpperCase(), whats = v("cad-whats"), email = v("cadj-email").toLowerCase();
   if(nome.length < 2){ showToast("Informe o nome do ambiente."); document.getElementById("cad-nome-amb").focus(); return; }
   const dd = doc.replace(/\D/g, "");
   if(dd && dd.length !== 11 && dd.length !== 14){ showToast("CNPJ ou CPF incompleto."); document.getElementById("cad-doc").focus(); return; }
   if(uf && !/^[A-Z]{2}$/.test(uf)){ showToast("UF inválida."); document.getElementById("cad-uf").focus(); return; }
   if(whats && !celularValido(whats)){ showToast("Informe o WhatsApp com DDD: (00) 00000-0000, ou deixe em branco."); document.getElementById("cad-whats").focus(); return; }
-  if(email && !emailValido(email)){ showToast("Confira o e-mail, ou deixe em branco."); document.getElementById("cad-email").focus(); return; }
+  if(email && !emailValido(email)){ showToast("Confira o e-mail, ou deixe em branco."); document.getElementById("cadj-email").focus(); return; }
   const btn = document.getElementById("cad-btn"); btn.disabled = true;
   try{
     if(nome !== it.nome) await cliQ(cliSb.from("clinicas").update({ nome }).eq("id", it.uuid).select("id"));
