@@ -974,6 +974,22 @@
   .fin-kpis{ display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:10px; }
   .fin-kpi{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px 14px; }
   .fin-kpi span{ display:block; font-size:13px; color:var(--muted); } .fin-kpi b{ display:block; font-size:20px; margin-top:2px; }
+  .site-datas{ display:flex; gap:10px; flex-wrap:wrap; } .site-datas label{ display:flex; align-items:center; gap:6px; font-size:14px; color:var(--muted); }
+  .site-datas input{ font:inherit; font-size:15px; padding:8px 10px; border:1px solid var(--line); border-radius:10px; background:#fff; color:var(--deep); }
+  .site-cartao{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px; }
+  .site-cartao h4{ margin:0 0 10px; font-size:15px; } .site-cartao small{ color:var(--muted); font-size:13px; }
+  .site-barras{ display:flex; align-items:flex-end; gap:3px; height:120px; }
+  .site-barras .col{ flex:1; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:3px; min-width:0; height:100%; }
+  .site-barras .b{ width:100%; border-radius:4px 4px 0 0; background:var(--accent); min-height:1px; }
+  .site-barras .b.wa{ background:#16A34A; }
+  .site-barras .r{ font-size:10px; color:var(--muted); white-space:nowrap; overflow:hidden; }
+  .site-leg{ display:flex; gap:14px; font-size:13px; color:var(--muted); margin-top:8px; } .site-leg i{ display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:-1px; }
+  .site-lin{ display:flex; align-items:center; gap:10px; font-size:14px; padding:5px 0; }
+  .site-lin .nm{ flex:0 0 38%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .site-lin .tr{ flex:1; height:8px; background:#EEF2F8; border-radius:99px; overflow:hidden; } .site-lin .tr span{ display:block; height:100%; background:var(--accent); border-radius:99px; }
+  .site-lin b{ flex:0 0 auto; min-width:32px; text-align:right; }
+  .site-grade{ display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:12px; }
+  .site-chave{ display:flex; align-items:center; gap:12px; } .site-chave p{ flex:1; margin:0; font-size:14px; }
   .fin-kpi.verde b{ color:var(--green-ink); } .fin-kpi.verm b{ color:var(--red-ink); } .fin-kpi.destaque{ background:#EEF4FD; border-color:#C7D7F2; }
   .fin-valor{ font-weight:700; white-space:nowrap; }
   .fin-check{ display:flex; align-items:center; gap:10px; font-size:15px; margin:4px 0 14px; }
@@ -1092,6 +1108,7 @@
     <button class="dm-item dm-so-largo" data-m="mc" onclick="devIr('mc')"><i class="ti ti-receipt-2"></i><span>Modelos comerciais</span></button>
     <button class="dm-item dm-so-largo" data-m="ct" onclick="devIr('ct')"><i class="ti ti-file-certificate"></i><span>Contratos</span></button>
     <button class="dm-item dm-so-largo" data-m="fin" onclick="devIr('fin')"><i class="ti ti-cash"></i><span>Financeiro</span></button>
+    <button class="dm-item dm-so-largo" data-m="site" onclick="devIr('site')"><i class="ti ti-world"></i><span>Site</span></button>
     <div class="dm-rodape">
       <button class="dm-item dm-so-largo" onclick="fazerLogout()"><i class="ti ti-logout"></i><span>Sair</span></button>
       <p class="dm-versao" id="dm-versao"></p>
@@ -1593,6 +1610,7 @@
         <button class="dev-condo" onclick="mcAbrirLista()"><div class="ic"><i class="ti ti-receipt-2"></i></div><div class="txt"><p class="t1">Modelos comerciais</p><p class="t2">Base, usuários ADM, profissionais e Módulo IA</p></div><div class="entrar">Abrir<i class="ti ti-chevron-right"></i></div></button>
         <button class="dev-condo" onclick="ctAbrirLista()"><div class="ic"><i class="ti ti-file-certificate"></i></div><div class="txt"><p class="t1">Contratos</p><p class="t2">Vínculo do modelo comercial com cada cliente</p></div><div class="entrar">Abrir<i class="ti ti-chevron-right"></i></div></button>
         <button class="dev-condo" onclick="finAbrir()"><div class="ic"><i class="ti ti-cash"></i></div><div class="txt"><p class="t1">Financeiro</p><p class="t2">Mensalidades dos clientes, despesas e resultado do mês</p></div><div class="entrar">Abrir<i class="ti ti-chevron-right"></i></div></button>
+        <button class="dev-condo" onclick="siteAbrir()"><div class="ic"><i class="ti ti-world"></i></div><div class="txt"><p class="t1">Site</p><p class="t2">Visitas e cliques do site institucional</p></div><div class="entrar">Abrir<i class="ti ti-chevron-right"></i></div></button>
         <div class="dev-rodape"><button class="btn btn-ghost" onclick="fazerLogout()"><i class="ti ti-logout"></i> Sair</button></div>
       </div>
     </div>
@@ -1607,6 +1625,20 @@
         </div>
         <div class="fin-mes"><button type="button" class="btn btn-ghost" onclick="finMudarMes(-1)" aria-label="Mês anterior"><i class="ti ti-chevron-left"></i></button><b id="fin-mes-txt"></b><button type="button" class="btn btn-ghost" onclick="finMudarMes(1)" aria-label="Próximo mês"><i class="ti ti-chevron-right"></i></button></div>
         <div id="fin-corpo" class="dev-bloco"></div>
+      </div>
+    </div>
+
+    <div class="dev-vista" id="dev-view-site">
+      <div class="dev-top"><div class="av"><i class="ti ti-world"></i></div><b>Site<span class="sub2">atypical-agendas.pages.dev · visitas e cliques</span></b></div>
+      <div class="dev-corpo">
+        <div class="cob-seg" id="site-per">
+          <button type="button" data-v="1" onclick="sitePeriodo(1)">Hoje</button>
+          <button type="button" data-v="7" onclick="sitePeriodo(7)">7 dias</button>
+          <button type="button" data-v="30" onclick="sitePeriodo(30)">30 dias</button>
+          <button type="button" data-v="90" onclick="sitePeriodo(90)">90 dias</button>
+        </div>
+        <div class="site-datas"><label>De <input type="date" id="site-de" onchange="siteDatas()"></label><label>Até <input type="date" id="site-ate" onchange="siteDatas()"></label></div>
+        <div id="site-corpo" class="dev-bloco"></div>
       </div>
     </div>
 
@@ -2688,7 +2720,7 @@ const EMAILJS_PUBLIC_KEY  = "PvKWTDB521UOqFeHX";
 const EMAILJS_SERVICE_ID  = "service_k2qfuuk";
 const EMAILJS_TEMPLATE_ID = "template_pmlppjg";
 
-const VERSAO_APP = "2026020002";   // Ajustes do ambiente: sem autopreenchimento do navegador
+const VERSAO_APP = "2026020003";   // Gestão → Site: visitas e cliques do site institucional
 
 /* ===================================================================== */
 
@@ -3422,7 +3454,7 @@ window.devEscolherTipo = function(t){
 function devContar(qual, texto){ const e = document.getElementById("dev-conta-" + qual); if(e) e.textContent = texto; }
 function mostrarVistaDev(vista){
   if(vista === "lista") devRenderTipo();
-  ["lista","p1","p2","p3","pronto","cob","cobform","planos","plano","clientrar","clinova","clipronto","mclista","mcform","ctlista","ctclinica","ctform","clihome","clilista","clidet","cliinfo","gestao","fin"].forEach(n=>{
+  ["lista","p1","p2","p3","pronto","cob","cobform","planos","plano","clientrar","clinova","clipronto","mclista","mcform","ctlista","ctclinica","ctform","clihome","clilista","clidet","cliinfo","gestao","fin","site"].forEach(n=>{
     document.getElementById("dev-view-" + n).style.display = (n === vista) ? "flex" : "none";
   });
   devMarcarMenu(vista);
@@ -3908,6 +3940,7 @@ function devMarcarMenu(vista){
   else if(vista.startsWith("mc")) m = window.matchMedia("(min-width:900px)").matches ? "mc" : "gestao";
   else if(vista.startsWith("ct")) m = window.matchMedia("(min-width:900px)").matches ? "ct" : "gestao";
   else if(vista === "fin") m = window.matchMedia("(min-width:900px)").matches ? "fin" : "gestao";
+  else if(vista === "site") m = window.matchMedia("(min-width:900px)").matches ? "site" : "gestao";
   else if(vista === "gestao") m = "gestao";
   document.querySelectorAll("#dev-menu .dm-item[data-m]").forEach(b => b.classList.toggle("on", b.dataset.m === m));
 }
@@ -3919,6 +3952,7 @@ window.devIr = function(dest){
   else if(dest === "mc") mcAbrirLista();
   else if(dest === "ct") ctAbrirLista();
   else if(dest === "fin") finAbrir();
+  else if(dest === "site") siteAbrir();
 };
 function cliSeg(id, valor){ document.querySelectorAll("#" + id + " button").forEach(b => b.classList.toggle("on", b.dataset.v === valor)); }
 window.cliEscolherTipoNovo = function(t){
@@ -5187,6 +5221,158 @@ function finItemMens(x, hoje){
   const st = finSituacao(x, hoje), saldo = Number(x.valor) - Number(x.recebido);
   const linha = "Vence " + mcData(x.vencimento) + (Number(x.recebido) > 0 && saldo > 0 ? " · recebido " + finR(x.recebido) + " · falta " + finR(saldo) : "");
   return finItem(finNomeCliente(x.clinica_id), st, linha, finR(x.valor), () => finAbrirMens(x));
+}
+
+
+/* =====================================================================
+   Gestão → Site (v2026020003): visitas e cliques do site institucional (atypical-agendas.pages.dev).
+   O site grava pela função site-evento (sem cookies e sem guardar IP) em site_eventos; aqui só lê.
+   Banco: site_eventos e site_config (só o desenvolvedor lê). Leituras: 2 por período escolhido.
+   O liga/desliga "Contar cliques em Recursos" fica em site_config.contar_recursos.
+   ===================================================================== */
+let siteDias = 7, siteDe = "", siteAte = "", siteEv = null, siteCfg = null;
+const SITE_TZ = "America/Sao_Paulo";
+const SITE_ALVOS = { whatsapp: "WhatsApp", recursos: "Recursos", email: "E-mail", demonstracao: "Agendar demonstração", contato: "Fale com a gente", outro: "Outro" };
+function siteDiaBR(iso){ return new Date(iso).toLocaleDateString("en-CA", { timeZone: SITE_TZ }); }
+function siteHoraBR(iso){ return Number(new Date(iso).toLocaleString("en-US", { timeZone: SITE_TZ, hour: "2-digit", hour12: false })) % 24; }
+function siteIntervalo(){
+  if(siteDe && siteAte) return { de: siteDe, ate: siteAte };
+  const hoje = hojeISO(), d = new Date(hoje + "T12:00:00"); d.setDate(d.getDate() - (siteDias - 1));
+  return { de: d.toISOString().slice(0, 10), ate: hoje };
+}
+window.siteAbrir = async function(){
+  mostrarVistaDev("site");
+  const iv = siteIntervalo();
+  cliSeg("site-per", siteDe ? "" : String(siteDias));
+  document.getElementById("site-de").value = iv.de; document.getElementById("site-ate").value = iv.ate;
+  const caixa = document.getElementById("site-corpo");
+  caixa.innerHTML = '<p class="dev-vazio">Carregando…</p>';
+  let user = null;
+  try{ user = await cliUsuario(); }catch(e){ /* trata abaixo */ }
+  if(!user){ cliCartaoAvisoEm(caixa, "Entre no banco das clínicas para ver os acessos do site.", "Entrar no Atypical & Agendas", ()=> cliAbrirEntrar()); return; }
+  if(CLI_AMBIENTE !== "producao"){ cliCartaoAvisoEm(caixa, "O contador do site grava só na produção. Abra o Painel pelo endereço oficial para ver os números."); return; }
+  try{
+    // Limites do dia no fuso de Brasília (UTC−3)
+    const ini = new Date(iv.de + "T00:00:00-03:00").toISOString(), fim = new Date(iv.ate + "T23:59:59.999-03:00").toISOString();
+    const [ev, cfg] = await Promise.all([
+      cliQ(cliSb.from("site_eventos").select("criado_em,tipo,alvo,pagina,sessao,dispositivo,navegador,sistema,origem,utm_origem,utm_campanha,cidade,estado,tempo_seg,rolagem_pct").gte("criado_em", ini).lte("criado_em", fim).order("criado_em").limit(20000)),
+      siteCfg ? Promise.resolve([siteCfg]) : cliQ(cliSb.from("site_config").select("*").eq("id", 1))
+    ]);
+    siteEv = ev; siteCfg = cfg[0] || { contar_recursos: true };
+  }catch(e){ siteEv = null; cliCartaoAvisoEm(caixa, cliMsgErro(e, "Não foi possível carregar os acessos do site."), "Tentar de novo", siteAbrir); return; }
+  siteDesenhar(iv);
+};
+window.sitePeriodo = function(n){ siteDias = n; siteDe = ""; siteAte = ""; siteAbrir(); };
+window.siteDatas = function(){
+  const de = document.getElementById("site-de").value, ate = document.getElementById("site-ate").value;
+  if(!de || !ate) return;
+  if(de > ate){ showToast("A data inicial precisa ser antes da final."); return; }
+  siteDe = de; siteAte = ate; siteAbrir();
+};
+function siteCartao(titulo, sub){
+  const c = document.createElement("div"); c.className = "site-cartao";
+  const h = document.createElement("h4"); h.textContent = titulo; c.appendChild(h);
+  if(sub){ const s = document.createElement("small"); s.textContent = sub; s.style.display = "block"; s.style.margin = "-6px 0 10px"; c.appendChild(s); }
+  return c;
+}
+function siteRanking(titulo, lista, campo, limite, sub){
+  const c = siteCartao(titulo, sub), cont = {};
+  lista.forEach(e => { const v = (typeof campo === "function" ? campo(e) : e[campo]) || "Não informado"; cont[v] = (cont[v] || 0) + 1; });
+  const itens = Object.entries(cont).sort((a, b) => b[1] - a[1]).slice(0, limite || 8), max = itens.length ? itens[0][1] : 1;
+  if(!itens.length){ const p = document.createElement("p"); p.className = "dev-vazio"; p.textContent = "Sem dados no período."; c.appendChild(p); }
+  itens.forEach(([nome, n]) => {
+    const l = document.createElement("div"); l.className = "site-lin";
+    const a = document.createElement("span"); a.className = "nm"; a.textContent = nome; a.title = nome;
+    const t = document.createElement("span"); t.className = "tr"; const f = document.createElement("span"); f.style.width = Math.max(3, Math.round(n / max * 100)) + "%"; t.appendChild(f);
+    const b = document.createElement("b"); b.textContent = n;
+    l.appendChild(a); l.appendChild(t); l.appendChild(b); c.appendChild(l);
+  });
+  return c;
+}
+function siteBarras(titulo, rotulos, serieA, serieB, legA, legB, sub){
+  const c = siteCartao(titulo, sub), g = document.createElement("div"); g.className = "site-barras";
+  const max = Math.max(1, ...serieA, ...serieB), passo = Math.ceil(rotulos.length / 12);
+  rotulos.forEach((r, i) => {
+    const col = document.createElement("div"); col.className = "col"; col.title = r + ": " + serieA[i] + " " + legA.toLowerCase() + ", " + serieB[i] + " " + legB.toLowerCase();
+    const par = document.createElement("div"); par.style.cssText = "display:flex;gap:1px;align-items:flex-end;width:100%;flex:1;";
+    const b1 = document.createElement("div"); b1.className = "b"; b1.style.height = (serieA[i] / max * 100) + "%";
+    const b2 = document.createElement("div"); b2.className = "b wa"; b2.style.height = (serieB[i] / max * 100) + "%";
+    par.appendChild(b1); par.appendChild(b2); col.appendChild(par);
+    const rt = document.createElement("span"); rt.className = "r"; rt.textContent = i % passo === 0 ? r : ""; col.appendChild(rt);
+    g.appendChild(col);
+  });
+  c.appendChild(g);
+  const lg = document.createElement("div"); lg.className = "site-leg";
+  lg.innerHTML = '<span><i style="background:var(--accent)"></i></span><span><i style="background:#16A34A"></i></span>';
+  lg.children[0].appendChild(document.createTextNode(legA)); lg.children[1].appendChild(document.createTextNode(legB));
+  c.appendChild(lg); return c;
+}
+function siteDesenhar(iv){
+  const caixa = document.getElementById("site-corpo"); if(!siteEv) return;
+  caixa.innerHTML = "";
+  const vis = siteEv.filter(e => e.tipo === "visita"), cli = siteEv.filter(e => e.tipo === "clique");
+  const wa = cli.filter(e => e.alvo === "whatsapp"), rec = cli.filter(e => e.alvo === "recursos");
+  const sessoes = new Set(vis.map(e => e.sessao).filter(Boolean)), sessWa = new Set(wa.map(e => e.sessao).filter(Boolean));
+  const conv = sessoes.size ? Math.round(sessWa.size / sessoes.size * 1000) / 10 : 0;
+  const kp = document.createElement("div"); kp.className = "fin-kpis";
+  kp.appendChild(finKpi("Visitas (páginas vistas)", String(vis.length)));
+  kp.appendChild(finKpi("Visitantes", String(sessoes.size)));
+  kp.appendChild(finKpi("Cliques no WhatsApp", String(wa.length), "verde"));
+  kp.appendChild(finKpi("Cliques em Recursos", String(rec.length)));
+  kp.appendChild(finKpi("Conversão (chamou no WhatsApp)", String(conv).replace(".", ",") + "%", "destaque"));
+  caixa.appendChild(kp);
+  if(!siteEv.length){ const p = document.createElement("p"); p.className = "dev-vazio"; p.textContent = "Nenhuma visita registrada neste período."; caixa.appendChild(p); }
+  // Por dia
+  const dias = []; for(let d = new Date(iv.de + "T12:00:00"); d.toISOString().slice(0, 10) <= iv.ate; d.setDate(d.getDate() + 1)) dias.push(d.toISOString().slice(0, 10));
+  if(dias.length > 1){
+    const pv = {}, pw = {}; vis.forEach(e => { const k = siteDiaBR(e.criado_em); pv[k] = (pv[k] || 0) + 1; }); wa.forEach(e => { const k = siteDiaBR(e.criado_em); pw[k] = (pw[k] || 0) + 1; });
+    caixa.appendChild(siteBarras("Por dia", dias.map(d => d.slice(8, 10) + "/" + d.slice(5, 7)), dias.map(d => pv[d] || 0), dias.map(d => pw[d] || 0), "Visitas", "WhatsApp", "Passe o mouse na barra para ver os números"));
+  }
+  // Por hora
+  const hv = Array(24).fill(0), hw = Array(24).fill(0); vis.forEach(e => hv[siteHoraBR(e.criado_em)]++); wa.forEach(e => hw[siteHoraBR(e.criado_em)]++);
+  caixa.appendChild(siteBarras("Horários de mais movimento", hv.map((_, h) => h + "h"), hv, hw, "Visitas", "WhatsApp", "Horário de Brasília"));
+  // Caminho e comportamento
+  const c = siteCartao("Comportamento antes de chamar no WhatsApp");
+  const sessRec = new Set(rec.map(e => e.sessao).filter(Boolean)), sessRecPag = new Set(vis.filter(e => /recursos/.test(e.pagina || "")).map(e => e.sessao));
+  const viuRec = [...sessWa].filter(s => sessRec.has(s) || sessRecPag.has(s)).length;
+  const tempos = wa.map(e => e.tempo_seg).filter(n => n != null), rol = wa.map(e => e.rolagem_pct).filter(n => n != null);
+  const med = a => a.length ? Math.round(a.reduce((t, n) => t + n, 0) / a.length) : null;
+  const linhas = [
+    ["Passaram por Recursos antes", sessWa.size ? viuRec + " de " + sessWa.size + " (" + Math.round(viuRec / sessWa.size * 100) + "%)" : "—"],
+    ["Tempo médio no site até o clique", med(tempos) == null ? "—" : (med(tempos) >= 60 ? Math.floor(med(tempos) / 60) + " min " + (med(tempos) % 60) + " s" : med(tempos) + " s")],
+    ["Rolagem média da página no clique", med(rol) == null ? "—" : med(rol) + "%"]
+  ];
+  linhas.forEach(([a, b]) => { const l = document.createElement("div"); l.className = "site-lin"; const x = document.createElement("span"); x.style.flex = "1"; x.textContent = a; const y = document.createElement("b"); y.textContent = b; l.appendChild(x); l.appendChild(y); c.appendChild(l); });
+  caixa.appendChild(c);
+  // Rankings
+  const g = document.createElement("div"); g.className = "site-grade";
+  g.appendChild(siteRanking("Cliques por botão", cli, e => SITE_ALVOS[e.alvo] || e.alvo, 8));
+  g.appendChild(siteRanking("De onde vieram", vis.filter(e => e.origem !== "interno"), "origem", 8, "Entradas no site (sem contar a navegação interna)"));
+  g.appendChild(siteRanking("Campanhas (links marcados)", vis.filter(e => e.utm_campanha || e.utm_origem), e => [e.utm_campanha, e.utm_origem].filter(Boolean).join(" · "), 8, "Links com ?utm_campaign=…"));
+  g.appendChild(siteRanking("Celular x computador", vis, "dispositivo", 4));
+  g.appendChild(siteRanking("Cidades", vis, e => e.cidade ? e.cidade + (e.estado ? " – " + e.estado : "") : null, 10, "Aproximadas"));
+  g.appendChild(siteRanking("Páginas mais vistas", vis, "pagina", 6));
+  g.appendChild(siteRanking("Navegador", vis, e => e.navegador + (e.sistema ? " · " + e.sistema : ""), 6));
+  caixa.appendChild(g);
+  // Liga/desliga do contador de Recursos
+  const cf = siteCartao("Contador de cliques em Recursos");
+  const ch = document.createElement("div"); ch.className = "site-chave";
+  const tx = document.createElement("p"); const ligado = siteCfg.contar_recursos !== false;
+  tx.textContent = ligado ? "Ligado: os cliques em Recursos estão sendo contados." : "Desligado: os cliques em Recursos não são mais contados (os já registrados continuam aqui).";
+  const bt = document.createElement("button"); bt.type = "button"; bt.className = "btn " + (ligado ? "btn-ghost" : "btn-primary"); bt.style.flex = "none";
+  bt.textContent = ligado ? "Desligar" : "Ligar";
+  bt.onclick = async () => {
+    bt.disabled = true;
+    try{ await cliQ(cliSb.from("site_config").update({ contar_recursos: !ligado, alterado_em: new Date().toISOString() }).eq("id", 1).select());
+      siteCfg = { ...siteCfg, contar_recursos: !ligado }; showToast(ligado ? "Contador de Recursos desligado." : "Contador de Recursos ligado."); siteDesenhar(iv); }
+    catch(e){ bt.disabled = false; showToast(cliMsgErro(e, "Não foi possível alterar o contador.")); }
+  };
+  ch.appendChild(tx); ch.appendChild(bt); cf.appendChild(ch);
+  if(siteCfg.alterado_em){ const s = document.createElement("small"); s.textContent = "Alterado em " + cliFmtDH(siteCfg.alterado_em); s.style.display = "block"; s.style.marginTop = "6px"; cf.appendChild(s); }
+  caixa.appendChild(cf);
+  const nota = document.createElement("p"); nota.className = "dev-vazio";
+  nota.textContent = "Sem cookies e sem guardar IP. Visitantes = abas de navegador distintas no período. Robôs de busca e prévias de link são ignorados.";
+  caixa.appendChild(nota);
 }
 window.finAbrirMens = function(x){
   finMensAtual = x; const hoje = hojeISO(), st = finSituacao(x, hoje), saldo = Math.max(0, Number(x.valor) - Number(x.recebido));
