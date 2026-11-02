@@ -1004,6 +1004,13 @@
   .cli-sw .sw::after{ content:""; position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff; transition:left .15s; }
   .cli-sw .sw.on{ background:var(--accent); } .cli-sw .sw.on::after{ left:23px; }
   .cli-sw + .cli-sw{ border-top:1px dashed var(--line); padding-top:10px; }
+  /* Ajustes do ambiente (v2026020001) */
+  .cli-us{ display:flex; align-items:center; gap:10px; width:100%; text-align:left; background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px 12px; font-family:inherit; color:var(--deep); cursor:pointer; }
+  .cli-us:hover{ border-color:#94A3B8; } .cli-us .tx{ flex:1; min-width:0; }
+  .cli-us b{ display:block; font-size:15px; } .cli-us small{ display:block; font-size:13px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .cli-us.inativo{ opacity:.55; }
+  .cli-bloco .cli-acao{ display:flex; justify-content:flex-end; margin-top:-36px; }
+  .cli-bloco .cli-acao button{ border:1px solid var(--line); background:#fff; color:var(--deep); border-radius:10px; padding:6px 12px; font-family:inherit; font-size:14px; cursor:pointer; display:flex; align-items:center; gap:6px; }
   .cli-info p{ font-size:15px; line-height:1.55; margin:0; color:var(--deep); } .cli-info p + p{ margin-top:6px; }
   .cli-confere{ font-size:20px; font-weight:700; color:var(--deep); background:var(--soft); border-radius:12px; padding:12px; word-break:break-all; text-align:center; margin:4px 0 12px; }
 </style>
@@ -2361,6 +2368,60 @@
   </div>
 </div>
 
+<!-- ===================== MODAL: AJUSTAR DADOS DO AMBIENTE (v2026020001) ===================== -->
+<div class="modal-wrap" id="modal-cli-dados" data-fixo="1" style="z-index:70;">
+  <div class="modal">
+    <h3>Ajustar dados do ambiente</h3>
+    <div class="field"><label for="cad-nome-amb">Nome do ambiente *</label><input type="text" id="cad-nome-amb" maxlength="120" autocomplete="off"></div>
+    <p class="dev-dica" style="margin:-6px 0 10px;">O código do link não muda aqui: ele é o endereço de entrada de quem já usa.</p>
+    <div class="field"><label for="cad-doc">CNPJ ou CPF</label><input type="text" id="cad-doc" inputmode="numeric" autocomplete="off" oninput="cliMascaraDoc(this)"></div>
+    <div class="cob-duas">
+      <div class="field"><label for="cad-cidade">Cidade</label><input type="text" id="cad-cidade" maxlength="80" autocomplete="off"></div>
+      <div class="field"><label for="cad-uf">UF</label><input type="text" id="cad-uf" maxlength="2" autocomplete="off" autocapitalize="characters" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/g,'')"></div>
+    </div>
+    <div class="field"><label for="cad-whats">WhatsApp do ambiente</label><input type="text" id="cad-whats" placeholder="(00) 00000-0000" inputmode="tel" autocomplete="off" oninput="mascararTelefoneZelador(this)"></div>
+    <div class="field"><label for="cad-email">E-mail do ambiente</label><input type="email" id="cad-email" maxlength="120" autocomplete="off" autocapitalize="none"></div>
+    <button class="btn btn-primary btn-linha" id="cad-btn" onclick="cliSalvarDados()"><i class="ti ti-check"></i> Salvar</button>
+    <button class="btn btn-ghost btn-linha" onclick="fecharModal('modal-cli-dados')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ===================== MODAL: AJUSTAR USUÁRIO DO AMBIENTE (v2026020001) ===================== -->
+<div class="modal-wrap" id="modal-cli-usuario" data-fixo="1" style="z-index:70;">
+  <div class="modal">
+    <h3>Ajustar usuário</h3>
+    <p class="dev-dica" style="margin:0 0 10px;">Login: <b id="cau-email"></b>. O e-mail não muda por aqui.</p>
+    <div class="field"><label for="cau-nome">Nome *</label><input type="text" id="cau-nome" maxlength="120" autocomplete="off"></div>
+    <div class="field"><label for="cau-cel">Celular com DDD (WhatsApp)</label><input type="text" id="cau-cel" placeholder="(00) 00000-0000" inputmode="tel" autocomplete="off" oninput="mascararTelefoneZelador(this)"></div>
+    <div class="field"><label>Tipo *</label>
+      <div class="cob-seg" id="cau-tipo">
+        <button type="button" data-v="supervisora" onclick="cliCauTipo('supervisora')">Supervisora</button>
+        <button type="button" data-v="recepcionista" onclick="cliCauTipo('recepcionista')">Recepção</button>
+        <button type="button" data-v="profissional" onclick="cliCauTipo('profissional')">Profissional</button>
+      </div>
+    </div>
+    <div class="cli-bloco" style="margin-bottom:14px;">
+      <div class="cli-sw"><div class="tx">Dona do ambiente<small>Tem os poderes de supervisora. Usado no tipo Profissional (Módulo P).</small></div><button type="button" class="sw" role="switch" id="cau-dona" onclick="this.classList.toggle('on')"></button></div>
+      <div class="cli-sw"><div class="tx">Ativo<small>Desligado: a pessoa não entra mais no app.</small></div><button type="button" class="sw" role="switch" id="cau-ativo" onclick="this.classList.toggle('on')"></button></div>
+    </div>
+    <button class="btn btn-primary btn-linha" id="cau-btn" onclick="cliSalvarUsuario()"><i class="ti ti-check"></i> Salvar</button>
+    <button class="btn btn-ghost btn-linha" id="cau-btn-senha" onclick="cliGerarSenha()"><i class="ti ti-key"></i> Gerar senha nova de primeiro acesso</button>
+    <button class="btn btn-ghost btn-linha" onclick="fecharModal('modal-cli-usuario')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ===================== MODAL: SENHA NOVA DO USUÁRIO (v2026020001) ===================== -->
+<div class="modal-wrap" id="modal-cli-senha" data-fixo="1" style="z-index:71;">
+  <div class="modal">
+    <h3>Senha nova gerada</h3>
+    <div class="senha-caixa"><p class="rot">Senha de primeiro acesso</p><p class="num" id="cas-senha">------</p></div>
+    <div class="rs-aviso"><i class="ti ti-alert-triangle"></i> <span>A senha anterior deixou de valer. No próximo acesso a pessoa cria a própria senha. Esta senha não aparece de novo.</span></div>
+    <button class="btn btn-whats" id="cas-btn-whats" style="width:100%;margin-bottom:8px;" onclick="cliSenhaWhats()"><i class="ti ti-brand-whatsapp"></i> Enviar pelo WhatsApp</button>
+    <button class="btn btn-ghost" style="width:100%;margin-bottom:8px;" onclick="cliSenhaCopiar()"><i class="ti ti-copy"></i> Copiar texto</button>
+    <button class="btn btn-ghost" style="width:100%;" onclick="cliSenhaFechar()">Concluir</button>
+  </div>
+</div>
+
 <!-- ===================== MODAL: SENHA INICIAL DA CASA (síndico / dev) ===================== -->
 <div class="modal-wrap" id="modal-senha-inicial" data-fixo="1" style="z-index:70;">
   <div class="modal">
@@ -2627,7 +2688,7 @@ const EMAILJS_PUBLIC_KEY  = "PvKWTDB521UOqFeHX";
 const EMAILJS_SERVICE_ID  = "service_k2qfuuk";
 const EMAILJS_TEMPLATE_ID = "template_pmlppjg";
 
-const VERSAO_APP = "2026290001";   // Gestão → Financeiro (receber, despesas, resumo)
+const VERSAO_APP = "2026020001";   // Ajustes do ambiente (dados, usuários e senha nova)
 
 /* ===================================================================== */
 
@@ -4002,8 +4063,18 @@ window.cliAbrirDetalhe = async function(uuid, semLerDados){
   // Dados da clínica (só leitura, vindos do app)
   const d = cliBloco("ti-id", it.tipo === "profissional" ? "Dados do cliente" : "Dados da clínica");
   const dCx = document.createElement("div"); d.appendChild(dCx);
-  const dDica = document.createElement("p"); dDica.className = "dev-dica"; dDica.textContent = "Só leitura. Quem edita é o próprio cliente, no app (Cadastros → Clínica)."; d.appendChild(dDica);
+  const dDica = document.createElement("p"); dDica.className = "dev-dica"; dDica.textContent = "O próprio cliente também edita no app (Cadastros → Clínica). Use Ajustar para pequenas correções."; d.appendChild(dDica);
+  const dAc = document.createElement("div"); dAc.className = "cli-acao"; dAc.innerHTML = '<button type="button"><i class="ti ti-pencil"></i> Ajustar</button>';
+  dAc.querySelector("button").onclick = () => cliAbrirDados();
+  d.insertBefore(dAc, dCx);
   corpo.appendChild(d);
+
+  // Usuários do ambiente (v2026020001)
+  const u = cliBloco("ti-users", "Usuários");
+  const uCx = document.createElement("div"); uCx.style.cssText = "display:flex;flex-direction:column;gap:8px;"; u.appendChild(uCx);
+  const uDica = document.createElement("p"); uDica.className = "dev-dica"; uDica.style.margin = "0"; uDica.textContent = "Toque num usuário para corrigir nome, celular, tipo, dona e ativo, ou gerar senha nova."; u.appendChild(uDica);
+  corpo.appendChild(u);
+  cliCarregarUsuarios(uuid, uCx);
   const mostraDados = x => { dCx.innerHTML = ""; cliDado(dCx, "CNPJ/CPF", x && x.cnpj); cliDado(dCx, "Cidade", x && (x.cidade ? x.cidade + (x.uf ? " - " + x.uf : "") : "")); cliDado(dCx, "WhatsApp", x && x.whatsapp); cliDado(dCx, "E-mail", x && x.email); };
   if(cliDetAtual.dados !== undefined) mostraDados(cliDetAtual.dados);
   else{
@@ -4049,6 +4120,143 @@ window.cliAbrirDetalhe = async function(uuid, semLerDados){
   cp.onclick = async () => { try{ await navigator.clipboard.writeText(linkDaClinica(it.codigo)); showToast("Link copiado."); }catch(e){ showToast("Não foi possível copiar."); } };
   a.appendChild(cp);
   corpo.appendChild(a);
+};
+/* ---------- Ajustes do ambiente (v2026020001) ----------
+   Pequenas correções pelo Painel: dados do ambiente, usuários e senha nova de primeiro acesso.
+   O login do desenvolvedor já tem permissão no banco; toda alteração vai para o histórico (config_historico, "painel_*"). */
+let cliUsuarios = [], cliUsAtual = null, cliSenhaNova = null;
+const CLI_TIPO_US = { supervisora: "Supervisora", recepcionista: "Recepção", profissional: "Profissional" };
+async function cliCarregarUsuarios(uuid, caixa){
+  caixa.innerHTML = '<p class="cli-dado"><span>Carregando…</span></p>';
+  try{
+    const us = await cliQ(cliSb.from("usuarios").select("id,nome,email,celular,tipo,dona,ativo,primeiro_acesso").eq("clinica_id", uuid).order("nome"));
+    if(!cliDetAtual || cliDetAtual.uuid !== uuid) return;
+    cliUsuarios = us || [];
+    caixa.innerHTML = "";
+    if(!cliUsuarios.length){ caixa.innerHTML = '<p class="dev-vazio">Nenhum usuário.</p>'; return; }
+    cliUsuarios.slice().sort((a, b) => (b.ativo === true) - (a.ativo === true)).forEach(x => {
+      const b = document.createElement("button"); b.type = "button"; b.className = "cli-us" + (x.ativo ? "" : " inativo");
+      b.innerHTML = '<i class="ti ti-user" style="font-size:20px;color:#334155;"></i><div class="tx"><b></b><small></small></div><i class="ti ti-chevron-right" style="color:var(--muted);"></i>';
+      b.querySelector("b").textContent = x.nome + (x.dona ? " · dona" : "");
+      b.querySelector("small").textContent = [CLI_TIPO_US[x.tipo] || x.tipo, x.celular || "sem celular", x.ativo ? (x.primeiro_acesso ? "aguardando 1º acesso" : "") : "inativo"].filter(Boolean).join(" · ");
+      b.onclick = () => cliAbrirUsuario(x.id);
+      caixa.appendChild(b);
+    });
+  }catch(e){ caixa.innerHTML = ""; cliDado(caixa, "Usuários", "não foi possível carregar"); }
+}
+window.cliAbrirDados = function(){
+  if(!cliDetAtual) return;
+  const x = cliDetAtual.dados || {};
+  const set = (id, v) => { document.getElementById(id).value = v || ""; };
+  set("cad-nome-amb", cliDetAtual.nome); set("cad-doc", x.cnpj); set("cad-cidade", x.cidade); set("cad-uf", x.uf);
+  set("cad-whats", x.whatsapp ? formatarCelular(x.whatsapp) : ""); set("cad-email", x.email);
+  abrirModal("modal-cli-dados");
+};
+window.cliSalvarDados = async function(){
+  const it = cliDetAtual; if(!it) return;
+  const v = id => document.getElementById(id).value.trim();
+  const nome = v("cad-nome-amb").replace(/\s+/g, " "), doc = v("cad-doc"), cidade = v("cad-cidade"), uf = v("cad-uf").toUpperCase(), whats = v("cad-whats"), email = v("cad-email").toLowerCase();
+  if(nome.length < 2){ showToast("Informe o nome do ambiente."); document.getElementById("cad-nome-amb").focus(); return; }
+  const dd = doc.replace(/\D/g, "");
+  if(dd && dd.length !== 11 && dd.length !== 14){ showToast("CNPJ ou CPF incompleto."); document.getElementById("cad-doc").focus(); return; }
+  if(uf && !/^[A-Z]{2}$/.test(uf)){ showToast("UF inválida."); document.getElementById("cad-uf").focus(); return; }
+  if(whats && !celularValido(whats)){ showToast("Informe o WhatsApp com DDD: (00) 00000-0000, ou deixe em branco."); document.getElementById("cad-whats").focus(); return; }
+  if(email && !emailValido(email)){ showToast("Confira o e-mail, ou deixe em branco."); document.getElementById("cad-email").focus(); return; }
+  const btn = document.getElementById("cad-btn"); btn.disabled = true;
+  try{
+    if(nome !== it.nome) await cliQ(cliSb.from("clinicas").update({ nome }).eq("id", it.uuid).select("id"));
+    const novos = { cnpj: doc || null, cidade: cidade || null, uf: uf || null, whatsapp: whats || null, email: email || null };
+    const ant = it.dados || {};
+    const mudou = Object.keys(novos).some(k => (ant[k] || null) !== novos[k]);
+    if(mudou){
+      if(it.dados) await cliQ(cliSb.from("clinica_dados").update(novos).eq("clinica_id", it.uuid).select("clinica_id"));
+      else await cliQ(cliSb.from("clinica_dados").insert(Object.assign({ clinica_id: it.uuid }, novos)).select("clinica_id"));
+    }
+    fecharModal("modal-cli-dados");
+    showToast(nome !== it.nome || mudou ? "Dados do ambiente salvos." : "Nada mudou.");
+    await cliCarregarClientes(true);
+    cliRenderizarArea();
+    cliAbrirDetalhe(it.uuid);
+  }catch(e){ showToast(cliMsgErro(e, "Não foi possível salvar. Confira a internet e o login do desenvolvedor.")); }
+  finally{ btn.disabled = false; }
+};
+window.cliCauTipo = function(t){ cliSeg("cau-tipo", t); document.getElementById("cau-tipo").dataset.v = t; };
+window.cliAbrirUsuario = function(id){
+  const x = cliUsuarios.find(y => y.id === id); if(!x) return;
+  cliUsAtual = x;
+  document.getElementById("cau-email").textContent = x.email;
+  document.getElementById("cau-nome").value = x.nome || "";
+  document.getElementById("cau-cel").value = x.celular ? formatarCelular(x.celular) : "";
+  cliCauTipo(x.tipo);
+  document.getElementById("cau-dona").classList.toggle("on", x.dona === true);
+  document.getElementById("cau-ativo").classList.toggle("on", x.ativo !== false);
+  document.getElementById("cau-btn-senha").style.display = x.ativo ? "" : "none";
+  abrirModal("modal-cli-usuario");
+};
+window.cliSalvarUsuario = async function(){
+  const x = cliUsAtual, it = cliDetAtual; if(!x || !it) return;
+  const nome = document.getElementById("cau-nome").value.trim().replace(/\s+/g, " ");
+  const cel = document.getElementById("cau-cel").value.trim();
+  const tipo = document.getElementById("cau-tipo").dataset.v;
+  const dona = document.getElementById("cau-dona").classList.contains("on");
+  const ativo = document.getElementById("cau-ativo").classList.contains("on");
+  if(nome.length < 2){ showToast("Informe o nome."); document.getElementById("cau-nome").focus(); return; }
+  if(cel && !celularValido(cel)){ showToast("Informe o celular com DDD: (00) 00000-0000, ou deixe em branco."); document.getElementById("cau-cel").focus(); return; }
+  if(!CLI_TIPO_US[tipo]){ showToast("Escolha o tipo."); return; }
+  const campos = {};
+  if(nome !== x.nome) campos.nome = nome;
+  if((cel || null) !== (x.celular || null) && formatarCelular(cel) !== (x.celular || "")) campos.celular = cel || null;
+  if(tipo !== x.tipo) campos.tipo = tipo;
+  if(dona !== (x.dona === true)) campos.dona = dona;
+  if(ativo !== (x.ativo !== false)) campos.ativo = ativo;
+  if(!Object.keys(campos).length){ fecharModal("modal-cli-usuario"); showToast("Nada mudou."); return; }
+  if(campos.ativo === false && !confirm("Desativar " + x.nome + "? A pessoa não entra mais no app.")) return;
+  const btn = document.getElementById("cau-btn"); btn.disabled = true;
+  try{
+    await cliQ(cliSb.from("usuarios").update(campos).eq("id", x.id).eq("clinica_id", it.uuid).select("id"));
+    fecharModal("modal-cli-usuario");
+    showToast("Usuário salvo.");
+    await cliCarregarClientes(true);
+    cliRenderizarArea();
+    cliAbrirDetalhe(it.uuid, true);
+  }catch(e){ showToast(cliMsgErro(e, "Não foi possível salvar o usuário.")); }
+  finally{ btn.disabled = false; }
+};
+window.cliGerarSenha = async function(){
+  const x = cliUsAtual, it = cliDetAtual; if(!x || !it) return;
+  if(!confirm("Gerar senha nova para " + x.nome + "? A senha atual deixa de valer e a pessoa refaz o primeiro acesso.")) return;
+  const btn = document.getElementById("cau-btn-senha"); btn.disabled = true;
+  try{
+    const senha = await cliQ(cliSb.rpc("painel_nova_senha", { p_usuario: x.id }));
+    cliSenhaNova = { nome: x.nome, email: x.email, celular: x.celular || "", codigo: it.codigo, senha: String(senha) };
+    fecharModal("modal-cli-usuario");
+    document.getElementById("cas-senha").textContent = cliSenhaNova.senha;
+    document.getElementById("cas-btn-whats").style.display = celularValido(cliSenhaNova.celular) ? "flex" : "none";
+    abrirModal("modal-cli-senha");
+  }catch(e){
+    const m = (e && e.message) || "";
+    showToast(/painel_nova_senha|function/i.test(m) && !/desenvolvedor|inativo|encontrado/i.test(m)
+      ? "Este banco ainda não tem a senha nova pelo Painel. Fale com o suporte para publicar." : cliMsgErro(e, "Não foi possível gerar a senha."));
+  }
+  finally{ btn.disabled = false; }
+};
+function cliSenhaTexto(){
+  const s = cliSenhaNova, primeiro = s.nome.split(/\s+/)[0];
+  return `Olá, ${primeiro}! Segue o seu acesso ao Atypical & Agendas.\n\nAcesse: ${linkDaClinica(s.codigo)}\n\nEntre com o e-mail *${s.email}* e a senha *${s.senha}*. No primeiro acesso você cria a sua própria senha.`;
+}
+window.cliSenhaWhats = function(){
+  if(!cliSenhaNova || !celularValido(cliSenhaNova.celular)) return;
+  window.open("https://wa.me/55" + cliSenhaNova.celular.replace(/\D/g, "") + "?text=" + encodeURIComponent(cliSenhaTexto()), "_blank", "noopener");
+};
+window.cliSenhaCopiar = async function(){
+  if(!cliSenhaNova) return;
+  try{ await navigator.clipboard.writeText(cliSenhaTexto().replace(/\*/g, "")); showToast("Link e senha copiados."); }
+  catch(e){ showToast("Não foi possível copiar."); }
+};
+window.cliSenhaFechar = function(){
+  cliSenhaNova = null; document.getElementById("cas-senha").textContent = "------";
+  fecharModal("modal-cli-senha");
+  if(cliDetAtual) cliAbrirDetalhe(cliDetAtual.uuid, true);
 };
 const CLI_INFO = {
   tipos: ["Tipos de cliente", [
