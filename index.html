@@ -5222,7 +5222,7 @@ window.ctSalvarAceite = async function(){
    v2026030001 — Perfil Sócia, Leads Instagram e Usuários do Painel (03/11/2026)
    Sócia: entra no Painel (?dev) com o login dela no banco das clínicas (painel_usuarios) e vê só
    Leads Instagram + Financeiro, com acesso total. Administrador = login do desenvolvedor.
-   Leads ficam na fila do porteiro na Cloudflare (insta.atypicaleagendas.com.br/api), que confere o
+   Leads ficam na fila do porteiro na Cloudflare (porteiro.atypicaleagendas.com.br/api), que confere o
    login do Painel no banco (painel_perfil).
    ===================================================================== */
 let painelSocia = false, sociaTentada = false;
@@ -5279,7 +5279,7 @@ window.sociaSalvarSenha = async function(){
 };
 
 /* ---------------- Leads Instagram ---------------- */
-const URL_INSTA = "https://insta.atypicaleagendas.com.br";
+const URL_INSTA = "https://porteiro.atypicaleagendas.com.br";   // porteiro na Cloudflare (o endereço insta. segue sendo o túnel do PC)
 const LD_ETAPAS = [["novo", "Novo"], ["respondido", "Respondido"], ["em_conversa", "Em conversa"], ["degustacao", "Degustação"], ["cliente", "Cliente"], ["descartado", "Descartado"]];
 const LD_COR = { novo: "avencer", respondido: "neutra", em_conversa: "avencer", degustacao: "ok", cliente: "ok", descartado: "neutra" };
 const ldNomeEtapa = e => (LD_ETAPAS.find(x => x[0] === e) || [e, e])[1];
