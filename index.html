@@ -1029,6 +1029,28 @@
   .cli-bloco .cli-acao button{ border:1px solid var(--line); background:#fff; color:var(--deep); border-radius:10px; padding:6px 12px; font-family:inherit; font-size:14px; cursor:pointer; display:flex; align-items:center; gap:6px; }
   .cli-info p{ font-size:15px; line-height:1.55; margin:0; color:var(--deep); } .cli-info p + p{ margin-top:6px; }
   .cli-confere{ font-size:20px; font-weight:700; color:var(--deep); background:var(--soft); border-radius:12px; padding:12px; word-break:break-all; text-align:center; margin:4px 0 12px; }
+
+  /* ---- v2026030001: Leads Instagram, Usuários do Painel e perfil Sócia ---- */
+  #tela-dev.modo-socia #dev-menu .dm-item:not(.dm-socia), #tela-dev.modo-socia #dev-menu .dm-grupo{ display:none !important; }
+  #tela-dev.modo-socia #dev-menu .dm-item.dm-socia{ display:flex !important; }
+  .ld-filtros{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .ld-filtros .cob-seg{ flex:1; min-width:220px; margin:0; }
+  .ld-filtros select{ font-family:inherit; font-size:15px; padding:9px 10px; border:1px solid var(--line); border-radius:12px; background:#fff; color:var(--deep); }
+  .ld-alerta{ background:var(--red); color:var(--red-ink); border:1px solid var(--red-bd); border-radius:12px; padding:10px 12px; font-size:14px; line-height:1.45; }
+  .ld-conversa{ display:flex; flex-direction:column; gap:8px; max-height:44vh; overflow-y:auto; margin:0 0 12px; padding:4px 2px; }
+  .ld-msg{ max-width:86%; padding:8px 12px; border-radius:14px; font-size:15px; line-height:1.4; white-space:pre-wrap; word-break:break-word; background:var(--soft); color:var(--deep); align-self:flex-start; }
+  .ld-msg.saida{ align-self:flex-end; background:#DBEAFE; }
+  .ld-msg small{ display:block; font-size:12px; color:var(--muted); margin-top:3px; }
+  .ld-etapas{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 14px; }
+  .ld-etapas button{ border:1px solid var(--line); background:#fff; border-radius:999px; padding:7px 12px; font-family:inherit; font-size:14px; cursor:pointer; color:var(--deep); }
+  .ld-etapas button.on{ background:var(--azul1); color:#fff; border-color:var(--azul1); }
+  .ld-rot{ font-size:13px; font-weight:600; color:var(--muted); margin:0 0 6px; text-transform:uppercase; letter-spacing:.06em; }
+  .ld-cont{ font-size:12px; color:var(--muted); text-align:right; margin-top:2px; }
+  .ld-info{ font-size:13px; color:var(--muted); margin:2px 0 0; }
+  .ld-caixa{ background:var(--soft); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--deep); line-height:1.55; }
+  .ld-caixa p{ margin:0 0 4px; } .ld-caixa p:last-child{ margin:0; }
+  textarea.ld-txt{ width:100%; min-height:96px; resize:vertical; font-family:inherit; font-size:16px; padding:10px 12px; border:1px solid var(--line); border-radius:12px; color:var(--deep); box-sizing:border-box; }
+  .pu-senha{ font-family:ui-monospace, 'SF Mono', Consolas, monospace; font-size:30px; letter-spacing:.2em; text-align:center; background:var(--soft); border-radius:12px; padding:14px; margin:0 0 12px; user-select:all; color:var(--deep); }
 </style>
 </head>
 <body>
@@ -1107,10 +1129,12 @@
     <button class="dm-item dm-so-cel" data-m="gestao" onclick="devIr('gestao')"><i class="ti ti-briefcase"></i><span>Gestão</span></button>
     <button class="dm-item dm-so-largo" data-m="mc" onclick="devIr('mc')"><i class="ti ti-receipt-2"></i><span>Modelos comerciais</span></button>
     <button class="dm-item dm-so-largo" data-m="ct" onclick="devIr('ct')"><i class="ti ti-file-certificate"></i><span>Contratos</span></button>
-    <button class="dm-item dm-so-largo" data-m="fin" onclick="devIr('fin')"><i class="ti ti-cash"></i><span>Financeiro</span></button>
+    <button class="dm-item dm-so-largo dm-socia" data-m="fin" onclick="devIr('fin')"><i class="ti ti-cash"></i><span>Financeiro</span></button>
+    <button class="dm-item dm-so-largo dm-socia" data-m="leads" onclick="devIr('leads')"><i class="ti ti-brand-instagram"></i><span class="dm-longo">Leads Instagram</span><span class="dm-curto">Leads</span></button>
     <button class="dm-item dm-so-largo" data-m="site" onclick="devIr('site')"><i class="ti ti-world"></i><span>Site</span></button>
+    <button class="dm-item dm-so-largo" data-m="usuarios" onclick="devIr('usuarios')"><i class="ti ti-users"></i><span>Usuários do Painel</span></button>
     <div class="dm-rodape">
-      <button class="dm-item dm-so-largo" onclick="fazerLogout()"><i class="ti ti-logout"></i><span>Sair</span></button>
+      <button class="dm-item dm-so-largo dm-socia" onclick="fazerLogout()"><i class="ti ti-logout"></i><span>Sair</span></button>
       <p class="dm-versao" id="dm-versao"></p>
     </div>
   </nav>
@@ -1610,6 +1634,8 @@
         <button class="dev-condo" onclick="mcAbrirLista()"><div class="ic"><i class="ti ti-receipt-2"></i></div><div class="txt"><p class="t1">Modelos comerciais</p><p class="t2">Base, usuários ADM, profissionais e Módulo IA</p></div><div class="entrar">Abrir<i class="ti ti-chevron-right"></i></div></button>
         <button class="dev-condo" onclick="ctAbrirLista()"><div class="ic"><i class="ti ti-file-certificate"></i></div><div class="txt"><p class="t1">Contratos</p><p class="t2">Vínculo do modelo comercial com cada cliente</p></div><div class="entrar">Abrir<i class="ti ti-chevron-right"></i></div></button>
         <button class="dev-condo" onclick="finAbrir()"><div class="ic"><i class="ti ti-cash"></i></div><div class="txt"><p class="t1">Financeiro</p><p class="t2">Mensalidades dos clientes, despesas e resultado do mês</p></div><div class="entrar">Abrir<i class="ti ti-chevron-right"></i></div></button>
+        <button class="dev-condo" onclick="ldAbrir()"><div class="ic"><i class="ti ti-brand-instagram"></i></div><div class="txt"><p class="t1">Leads Instagram</p><p class="t2">Comentários e Direct do @atypicaleagendas, funil e respostas automáticas</p></div><div class="entrar">Abrir<i class="ti ti-chevron-right"></i></div></button>
+        <button class="dev-condo" onclick="puAbrir()"><div class="ic"><i class="ti ti-users"></i></div><div class="txt"><p class="t1">Usuários do Painel</p><p class="t2">Quem entra no Painel e com qual perfil</p></div><div class="entrar">Abrir<i class="ti ti-chevron-right"></i></div></button>
         <button class="dev-condo" onclick="siteAbrir()"><div class="ic"><i class="ti ti-world"></i></div><div class="txt"><p class="t1">Site</p><p class="t2">Visitas e cliques do site institucional</p></div><div class="entrar">Abrir<i class="ti ti-chevron-right"></i></div></button>
         <div class="dev-rodape"><button class="btn btn-ghost" onclick="fazerLogout()"><i class="ti ti-logout"></i> Sair</button></div>
       </div>
@@ -1625,6 +1651,25 @@
         </div>
         <div class="fin-mes"><button type="button" class="btn btn-ghost" onclick="finMudarMes(-1)" aria-label="Mês anterior"><i class="ti ti-chevron-left"></i></button><b id="fin-mes-txt"></b><button type="button" class="btn btn-ghost" onclick="finMudarMes(1)" aria-label="Próximo mês"><i class="ti ti-chevron-right"></i></button></div>
         <div id="fin-corpo" class="dev-bloco"></div>
+      </div>
+    </div>
+
+    <div class="dev-vista" id="dev-view-leads">
+      <div class="dev-top"><div class="av"><i class="ti ti-brand-instagram"></i></div><b>Leads Instagram<span class="sub2">@atypicaleagendas</span></b></div>
+      <div class="dev-corpo">
+        <div class="cob-seg" id="ld-aba">
+          <button type="button" data-v="leads" onclick="ldAba('leads')">Leads</button>
+          <button type="button" data-v="textos" onclick="ldAba('textos')">Respostas automáticas</button>
+        </div>
+        <div id="ld-corpo" class="dev-bloco"></div>
+      </div>
+    </div>
+
+    <div class="dev-vista" id="dev-view-usuarios">
+      <div class="dev-top"><div class="av"><i class="ti ti-users"></i></div><b>Usuários do Painel<span class="sub2">Só o Administrador vê esta tela</span></b></div>
+      <div class="dev-corpo">
+        <button class="btn btn-primary" onclick="puNovo()"><i class="ti ti-user-plus"></i> Novo usuário</button>
+        <div id="pu-corpo" class="dev-bloco"></div>
       </div>
     </div>
 
@@ -2400,6 +2445,66 @@
   </div>
 </div>
 
+<!-- ===================== v2026030001: LEADS INSTAGRAM, USUÁRIOS DO PAINEL E SÓCIA ===================== -->
+<div class="modal-wrap" id="modal-ld-lead" style="z-index:73;">
+  <div class="modal">
+    <h3 id="ld-m-tit">Lead</h3>
+    <p class="sub" id="ld-m-sub" style="margin:-6px 0 12px;font-size:15px;"></p>
+    <div class="ld-conversa" id="ld-m-conv"></div>
+    <p class="ld-rot">Etapa do funil</p>
+    <div class="ld-etapas" id="ld-m-etapas"></div>
+    <a class="btn btn-ghost btn-linha" id="ld-m-link" target="_blank" rel="noopener"><i class="ti ti-brand-instagram"></i> Abrir perfil no Instagram</a>
+    <button class="btn btn-ghost btn-linha" id="ld-m-excluir" onclick="ldExcluir()" style="color:var(--red-ink);"><i class="ti ti-trash"></i> Excluir lead</button>
+    <button class="btn btn-ghost btn-linha" onclick="fecharModal('modal-ld-lead')">Fechar</button>
+  </div>
+</div>
+<div class="modal-wrap" id="modal-pu-novo" data-fixo="1" style="z-index:73;">
+  <div class="modal">
+    <h3>Novo usuário do Painel</h3>
+    <div class="field"><label for="pu-nome">Nome *</label><input type="text" id="pu-nome" maxlength="120" autocomplete="off"></div>
+    <div class="field"><label for="pu-email">E-mail de login *</label><input type="email" id="pu-email" maxlength="120" autocomplete="off"></div>
+    <div class="field"><label for="pu-perfil">Perfil *</label><select id="pu-perfil"><option value="socia">Sócia — Leads Instagram e Financeiro (acesso total)</option></select></div>
+    <p class="ld-info" style="margin:-4px 0 12px;">O sistema gera uma senha inicial de 6 números. No primeiro acesso a pessoa cria a senha dela.</p>
+    <button class="btn btn-primary btn-linha" id="pu-n-btn" onclick="puSalvarNovo()"><i class="ti ti-check"></i> Cadastrar</button>
+    <button class="btn btn-ghost btn-linha" onclick="fecharModal('modal-pu-novo')">Cancelar</button>
+  </div>
+</div>
+<div class="modal-wrap" id="modal-pu-editar" data-fixo="1" style="z-index:73;">
+  <div class="modal">
+    <h3>Usuário do Painel</h3>
+    <p class="sub" id="pu-e-sub" style="margin:-6px 0 12px;font-size:15px;"></p>
+    <div class="field"><label for="pu-e-nome">Nome *</label><input type="text" id="pu-e-nome" maxlength="120" autocomplete="off"></div>
+    <div class="field"><label>Acesso</label>
+      <div class="cob-seg" id="pu-e-ativo">
+        <button type="button" data-v="sim" onclick="puEscolherAtivo(true)">Ativo</button>
+        <button type="button" data-v="nao" onclick="puEscolherAtivo(false)">Inativo</button>
+      </div>
+      <p class="ld-info">Inativo não entra no Painel. O cadastro fica guardado.</p>
+    </div>
+    <button class="btn btn-primary btn-linha" id="pu-e-btn" onclick="puSalvarEdicao()"><i class="ti ti-check"></i> Salvar</button>
+    <button class="btn btn-ghost btn-linha" id="pu-e-senha" onclick="puGerarSenha()"><i class="ti ti-key"></i> Gerar senha nova</button>
+    <button class="btn btn-ghost btn-linha" onclick="fecharModal('modal-pu-editar')">Cancelar</button>
+  </div>
+</div>
+<div class="modal-wrap" id="modal-pu-senha" data-fixo="1" style="z-index:74;">
+  <div class="modal">
+    <h3>Senha inicial</h3>
+    <p class="sub" id="pu-s-txt" style="margin:-6px 0 12px;font-size:15px;line-height:1.5;"></p>
+    <div class="pu-senha" id="pu-s-cod"></div>
+    <button class="btn btn-primary btn-linha" onclick="puCopiarSenha()"><i class="ti ti-copy"></i> Copiar mensagem com a senha</button>
+    <button class="btn btn-ghost btn-linha" onclick="fecharModal('modal-pu-senha')">Fechar</button>
+  </div>
+</div>
+<div class="modal-wrap" id="modal-socia-senha" data-fixo="1" style="z-index:75;">
+  <div class="modal">
+    <h3>Crie a sua senha</h3>
+    <p class="sub" style="margin:-6px 0 12px;font-size:15px;">É o seu primeiro acesso. Troque a senha inicial por uma só sua.</p>
+    <div class="field"><label for="ss-nova">Nova senha (mínimo 6 caracteres) *</label><input type="password" id="ss-nova" autocomplete="new-password"></div>
+    <div class="field"><label for="ss-conf">Repita a nova senha *</label><input type="password" id="ss-conf" autocomplete="new-password"></div>
+    <button class="btn btn-primary btn-linha" id="ss-btn" onclick="sociaSalvarSenha()"><i class="ti ti-check"></i> Salvar senha</button>
+  </div>
+</div>
+
 <!-- ===================== MODAL: AJUSTAR DADOS DO AMBIENTE (v2026020001) ===================== -->
 <div class="modal-wrap" id="modal-cli-dados" data-fixo="1" style="z-index:70;">
   <div class="modal">
@@ -2720,7 +2825,7 @@ const EMAILJS_PUBLIC_KEY  = "PvKWTDB521UOqFeHX";
 const EMAILJS_SERVICE_ID  = "service_k2qfuuk";
 const EMAILJS_TEMPLATE_ID = "template_pmlppjg";
 
-const VERSAO_APP = "2026020004";   // Gestão → Site: subtítulo com o domínio atypicaleagendas.com.br
+const VERSAO_APP = "2026030001";   // Leads Instagram, Respostas automáticas, Usuários do Painel e perfil Sócia
 
 /* ===================================================================== */
 
@@ -3086,6 +3191,8 @@ window.fazerLogin = async function(){
     msg.textContent = SEM_CONDOMINIO ? "Abra o app pelo link do seu condomínio. Peça o link ao síndico." : "Digite o e-mail do desenvolvedor.";
     msg.classList.add("err"); return;
   }
+  // Painel (?dev) com e-mail que não é o do desenvolvedor: usuário do Painel (perfil Sócia), no banco das clínicas
+  if(MODO_DEV_URL && porEmail && casa.toLowerCase() !== EMAIL_DESENVOLVEDOR.toLowerCase()) return entrarSocia(casa, senha, msg);
   try{
     await signInWithEmailAndPassword(auth, porEmail ? casa.toLowerCase() : emailVirtualDaCasa(casa), senha);
     // onAuthStateChanged cuida do resto
@@ -3233,6 +3340,7 @@ window.salvarCadastroObrigatorio = async function(){
 };
 
 window.fazerLogout = async function(){
+  if(painelSocia){ try{ await cliSair(); }catch(e){ /* segue */ } location.href = urlBaseDoApp() + "?dev"; return; }
   // Desenvolvedor: ao sair, volta para a entrada genérica (e não para o condomínio que estava visitando)
   const eraDev = ehDev;
   if(eraDev){ try{ await cliSair(); }catch(e){ /* segue com a saída do app */ } }
@@ -3307,6 +3415,8 @@ async function carregarDadosCondominioParaLogin(){
    ===================================================================== */
 onAuthStateChanged(auth, async (user) => {
   if(!user){
+    if(MODO_DEV_URL && !sociaTentada){ sociaTentada = true; if(await retomarSocia()) return; }
+    if(painelSocia) return;
     casaAtual = null; casaAtualId = null;
     marcarAparelhoDoDev(false);
     painelDevAberto = false; devSemCasa = false;
@@ -3454,7 +3564,7 @@ window.devEscolherTipo = function(t){
 function devContar(qual, texto){ const e = document.getElementById("dev-conta-" + qual); if(e) e.textContent = texto; }
 function mostrarVistaDev(vista){
   if(vista === "lista") devRenderTipo();
-  ["lista","p1","p2","p3","pronto","cob","cobform","planos","plano","clientrar","clinova","clipronto","mclista","mcform","ctlista","ctclinica","ctform","clihome","clilista","clidet","cliinfo","gestao","fin","site"].forEach(n=>{
+  ["lista","p1","p2","p3","pronto","cob","cobform","planos","plano","clientrar","clinova","clipronto","mclista","mcform","ctlista","ctclinica","ctform","clihome","clilista","clidet","cliinfo","gestao","fin","site","leads","usuarios"].forEach(n=>{
     document.getElementById("dev-view-" + n).style.display = (n === vista) ? "flex" : "none";
   });
   devMarcarMenu(vista);
@@ -3939,12 +4049,16 @@ function devMarcarMenu(vista){
   else if(vista.startsWith("cli")) m = "atypical";
   else if(vista.startsWith("mc")) m = window.matchMedia("(min-width:900px)").matches ? "mc" : "gestao";
   else if(vista.startsWith("ct")) m = window.matchMedia("(min-width:900px)").matches ? "ct" : "gestao";
-  else if(vista === "fin") m = window.matchMedia("(min-width:900px)").matches ? "fin" : "gestao";
+  else if(vista === "fin") m = (painelSocia || window.matchMedia("(min-width:900px)").matches) ? "fin" : "gestao";
   else if(vista === "site") m = window.matchMedia("(min-width:900px)").matches ? "site" : "gestao";
+  else if(vista === "leads" || vista === "usuarios") m = (painelSocia || window.matchMedia("(min-width:900px)").matches) ? vista : "gestao";
   else if(vista === "gestao") m = "gestao";
   document.querySelectorAll("#dev-menu .dm-item[data-m]").forEach(b => b.classList.toggle("on", b.dataset.m === m));
 }
 window.devIr = function(dest){
+  if(painelSocia && dest !== "leads" && dest !== "fin") dest = "leads";   // Sócia: só Leads e Financeiro
+  if(dest === "leads") return ldAbrir();
+  if(dest === "usuarios") return puAbrir();
   if(dest === "inicio"){ devEscolherTipo(null); mostrarVistaDev("lista"); }
   else if(dest === "festas"){ devEscolherTipo("festas"); mostrarVistaDev("lista"); }
   else if(dest === "atypical" || dest === "clientes") cliAbrirLista();
@@ -5105,6 +5219,325 @@ window.ctSalvarAceite = async function(){
 
 
 /* =====================================================================
+   v2026030001 — Perfil Sócia, Leads Instagram e Usuários do Painel (03/11/2026)
+   Sócia: entra no Painel (?dev) com o login dela no banco das clínicas (painel_usuarios) e vê só
+   Leads Instagram + Financeiro, com acesso total. Administrador = login do desenvolvedor.
+   Leads ficam na fila do porteiro na Cloudflare (insta.atypicaleagendas.com.br/api), que confere o
+   login do Painel no banco (painel_perfil).
+   ===================================================================== */
+let painelSocia = false, sociaTentada = false;
+async function perfilPainel(){ try{ return await cliQ(cliSb.rpc("painel_perfil")); }catch(e){ return null; } }
+// Login válido para as telas que a Sócia também usa (Financeiro, Leads)
+async function cliUsuarioPainel(){
+  if(!painelSocia) return cliUsuario();
+  cliPreparar(); const { data } = await cliSb.auth.getSession();
+  return data && data.session ? data.session.user : null;
+}
+async function entrarSocia(email, senha, msg){
+  cliPreparar();
+  let res = null;
+  try{ res = await cliSb.auth.signInWithPassword({ email: email.toLowerCase(), password: senha }); }catch(e){ res = { error: e }; }
+  if(res.error || !res.data || !res.data.session){
+    msg.textContent = /fetch|network/i.test((res.error && res.error.message) || "") ? "Sem conexão. Confira a internet e tente de novo." : "E-mail ou senha inválidos.";
+    msg.classList.add("err"); return;
+  }
+  if(await perfilPainel() !== "socia"){
+    try{ await cliSb.auth.signOut(); }catch(e){ /* segue */ }
+    msg.textContent = "Este login não tem acesso ao Painel."; msg.classList.add("err"); return;
+  }
+  abrirPainelSocia(res.data.session.user);
+}
+async function retomarSocia(){
+  try{
+    cliPreparar();
+    const { data } = await cliSb.auth.getSession();
+    const u = data && data.session ? data.session.user : null;
+    if(!u || (u.app_metadata && u.app_metadata.dev === true)) return false;
+    if(await perfilPainel() !== "socia"){ try{ await cliSb.auth.signOut(); }catch(e){ /* segue */ } return false; }
+    abrirPainelSocia(u); return true;
+  }catch(e){ return false; }
+}
+function abrirPainelSocia(u){
+  painelSocia = true; painelDevAberto = true;
+  ["tela-carregando", "tela-login", "app-shell"].forEach(id => { document.getElementById(id).style.display = "none"; });
+  const tela = document.getElementById("tela-dev"); tela.style.display = "block"; tela.classList.add("modo-socia");
+  ldAbrir();
+  if(u && u.user_metadata && u.user_metadata.trocar_senha){ document.getElementById("ss-nova").value = ""; document.getElementById("ss-conf").value = ""; abrirModal("modal-socia-senha"); }
+}
+window.sociaSalvarSenha = async function(){
+  const b = document.getElementById("ss-btn"); if(b.disabled) return;
+  const n = document.getElementById("ss-nova").value, c = document.getElementById("ss-conf").value;
+  if(n.length < 6){ showToast("A senha precisa ter pelo menos 6 caracteres."); document.getElementById("ss-nova").focus(); return; }
+  if(n !== c){ showToast("As duas senhas não estão iguais."); document.getElementById("ss-conf").focus(); return; }
+  b.disabled = true;
+  try{
+    const { error } = await cliSb.auth.updateUser({ password: n, data: { trocar_senha: false } });
+    if(error) throw error;
+    fecharModal("modal-socia-senha"); showToast("Senha criada. Use ela nos próximos acessos.");
+  }catch(e){ showToast(/same|different/i.test(e.message || "") ? "Escolha uma senha diferente da inicial." : cliMsgErro(e, "Não foi possível salvar a senha.")); }
+  finally{ b.disabled = false; }
+};
+
+/* ---------------- Leads Instagram ---------------- */
+const URL_INSTA = "https://insta.atypicaleagendas.com.br";
+const LD_ETAPAS = [["novo", "Novo"], ["respondido", "Respondido"], ["em_conversa", "Em conversa"], ["degustacao", "Degustação"], ["cliente", "Cliente"], ["descartado", "Descartado"]];
+const LD_COR = { novo: "avencer", respondido: "neutra", em_conversa: "avencer", degustacao: "ok", cliente: "ok", descartado: "neutra" };
+const ldNomeEtapa = e => (LD_ETAPAS.find(x => x[0] === e) || [e, e])[1];
+let ldDados = null, ldCfg = null, ldAbaAtual = "leads", ldFiltro = "pendentes", ldEtapaFiltro = "", ldAtual = null;
+async function ldApi(metodo, caminho, corpo){
+  const token = await cliToken(); if(!token) throw new Error("login");
+  const r = await fetch(URL_INSTA + caminho, { method: metodo, credentials: "omit",
+    headers: { Authorization: "Bearer " + token, "X-Ambiente": CLI_AMBIENTE, "Content-Type": "application/json" },
+    body: corpo === undefined ? undefined : JSON.stringify(corpo) });
+  const d = await r.json().catch(() => ({}));
+  if(r.status === 401) throw new Error("login");
+  if(!r.ok) throw new Error(d.erro || "falha");
+  return d;
+}
+function ldMsgErro(e, padrao){
+  const m = (e && e.message) || "";
+  if(m === "login") return painelSocia ? "Sua sessão terminou. Entre de novo." : "Entre no banco das clínicas para ver os leads.";
+  if(/Failed to fetch|NetworkError|Load failed/i.test(m)) return "O porteiro do Instagram não respondeu. Confira a internet e tente de novo.";
+  return padrao;
+}
+function ldQuando(iso){
+  if(!iso) return "";
+  const s = (Date.now() - Date.parse(iso)) / 1000;
+  if(s < 90) return "agora";
+  if(s < 3600) return "há " + Math.round(s / 60) + " min";
+  if(s < 86400) return "há " + Math.round(s / 3600) + "h";
+  return new Date(iso).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+}
+window.ldAbrir = async function(){
+  mostrarVistaDev("leads"); cliSeg("ld-aba", ldAbaAtual);
+  const caixa = document.getElementById("ld-corpo");
+  if(!painelSocia){
+    let u = null; try{ u = await cliUsuario(); }catch(e){ /* trata abaixo */ }
+    if(!u){ cliCartaoAvisoEm(caixa, "Entre no banco das clínicas para ver os leads.", "Entrar no Atypical & Agendas", ()=> cliAbrirEntrar()); return; }
+  }
+  await ldCarregar();
+};
+async function ldCarregar(){
+  const caixa = document.getElementById("ld-corpo");
+  caixa.innerHTML = '<p class="dev-vazio">Carregando…</p>';
+  try{
+    if(ldAbaAtual === "leads") ldDados = await ldApi("GET", "/api/leads");
+    else ldCfg = await ldApi("GET", "/api/config");
+  }catch(e){
+    if(e.message === "login" && painelSocia){ cliCartaoAvisoEm(caixa, ldMsgErro(e), "Entrar", ()=> fazerLogout()); return; }
+    cliCartaoAvisoEm(caixa, ldMsgErro(e, "Não foi possível carregar."), "Tentar de novo", ldCarregar); return;
+  }
+  ldDesenhar();
+}
+window.ldAba = function(a){ ldAbaAtual = a === "textos" ? "textos" : "leads"; cliSeg("ld-aba", ldAbaAtual); ldCarregar(); };
+window.ldFiltrar = function(f){ ldFiltro = f; ldDesenhar(); };
+window.ldFiltrarEtapa = function(v){ ldEtapaFiltro = v; ldDesenhar(); };
+function ldDesenhar(){ if(ldAbaAtual === "textos") return ldDesenharTextos(); ldDesenharLeads(); }
+function ldDesenharLeads(){
+  const caixa = document.getElementById("ld-corpo"); caixa.innerHTML = "";
+  const leads = (ldDados && ldDados.leads) || [];
+  const erro = ldDados && ldDados.erro;
+  if(erro && erro.valor && (Date.now() - Date.parse(erro.alterado_em)) < 48 * 3600 * 1000){
+    const a = document.createElement("div"); a.className = "ld-alerta";
+    a.textContent = "Falha ao falar com o Instagram (" + ldQuando(erro.alterado_em) + "): " + erro.valor + ". As mensagens continuam guardadas na fila.";
+    caixa.appendChild(a);
+  }
+  const pend = leads.filter(l => l.pendente === 1 && l.etapa !== "descartado" && l.etapa !== "cliente");
+  const f = document.createElement("div"); f.className = "ld-filtros";
+  f.innerHTML = '<div class="cob-seg" id="ld-filtro"><button type="button" data-v="pendentes" onclick="ldFiltrar(\'pendentes\')">Aguardando (' + pend.length + ')</button><button type="button" data-v="todos" onclick="ldFiltrar(\'todos\')">Todos (' + leads.length + ')</button></div>'
+    + '<select id="ld-etapa-filtro" aria-label="Filtrar por etapa" onchange="ldFiltrarEtapa(this.value)"><option value="">Todas as etapas</option>'
+    + LD_ETAPAS.map(e => '<option value="' + e[0] + '">' + e[1] + '</option>').join("") + '</select>';
+  caixa.appendChild(f);
+  cliSeg("ld-filtro", ldFiltro); document.getElementById("ld-etapa-filtro").value = ldEtapaFiltro;
+  let lista = ldFiltro === "pendentes" ? pend : leads;
+  if(ldEtapaFiltro) lista = lista.filter(l => l.etapa === ldEtapaFiltro);
+  if(!lista.length){
+    const p = document.createElement("p"); p.className = "dev-vazio";
+    p.textContent = ldFiltro === "pendentes" && !ldEtapaFiltro ? "Nenhum lead aguardando resposta." : "Nenhum lead neste filtro.";
+    caixa.appendChild(p);
+  }
+  lista.forEach(l => {
+    const origem = l.origem === "dm" ? "Direct" : "Comentário";
+    const linha = origem + " · " + ldQuando(l.ultimo_em) + (l.ultimo_texto ? " · “" + l.ultimo_texto.slice(0, 90) + (l.ultimo_texto.length > 90 ? "…" : "") + "”" : "");
+    const item = finItem("@" + (l.username || l.id), { t: ldNomeEtapa(l.etapa), c: LD_COR[l.etapa] || "neutra" }, linha, l.pendente === 1 && l.etapa !== "descartado" && l.etapa !== "cliente" ? "Aguardando" : "", () => ldAbrirLead(l));
+    caixa.appendChild(item);
+  });
+  const nota = document.createElement("p"); nota.className = "ld-info";
+  nota.textContent = "“Aguardando” = a pessoa escreveu e ainda não recebeu resposta de verdade (a automática não conta). O lote do Claude roda às 8h e 18h.";
+  caixa.appendChild(nota);
+}
+async function ldAbrirLead(l){
+  ldAtual = l;
+  document.getElementById("ld-m-tit").textContent = "@" + (l.username || l.id);
+  document.getElementById("ld-m-sub").textContent = (l.nome ? l.nome + " · " : "") + "Primeiro contato por " + (l.origem === "dm" ? "Direct" : "comentário") + " em " + new Date(l.primeiro_em).toLocaleDateString("pt-BR")
+    + (l.etapa_por ? " · etapa mudada por " + l.etapa_por + " " + ldQuando(l.etapa_em) : "");
+  const link = document.getElementById("ld-m-link");
+  if(l.username){ link.href = "https://www.instagram.com/" + encodeURIComponent(l.username) + "/"; link.style.display = ""; } else link.style.display = "none";
+  ldDesenharEtapas();
+  const conv = document.getElementById("ld-m-conv"); conv.innerHTML = '<p class="dev-vazio">Carregando conversa…</p>';
+  abrirModal("modal-ld-lead");
+  try{
+    const d = await ldApi("GET", "/api/leads/" + encodeURIComponent(l.id));
+    if(ldAtual !== l) return;
+    conv.innerHTML = "";
+    (d.mensagens || []).forEach(m => {
+      const b = document.createElement("div"); b.className = "ld-msg" + (m.direcao === "saida" ? " saida" : "");
+      b.textContent = m.texto || "";
+      const sm = document.createElement("small");
+      sm.textContent = (m.tipo === "dm" ? "Direct" : "Comentário") + " · " + ldQuando(m.criado_em) + (m.direcao === "saida" ? (m.auto ? " · automática" : " · resposta") : "");
+      b.appendChild(sm); conv.appendChild(b);
+    });
+    if(!conv.children.length) conv.innerHTML = '<p class="dev-vazio">Sem mensagens guardadas.</p>';
+    conv.scrollTop = conv.scrollHeight;
+  }catch(e){ conv.innerHTML = ""; const p = document.createElement("p"); p.className = "dev-vazio"; p.textContent = ldMsgErro(e, "Não foi possível carregar a conversa."); conv.appendChild(p); }
+}
+function ldDesenharEtapas(){
+  const c = document.getElementById("ld-m-etapas"); c.innerHTML = "";
+  LD_ETAPAS.forEach(([v, rot]) => {
+    const b = document.createElement("button"); b.type = "button"; b.textContent = rot;
+    if(ldAtual && ldAtual.etapa === v) b.className = "on";
+    b.onclick = () => ldMudarEtapa(v, b);
+    c.appendChild(b);
+  });
+}
+async function ldMudarEtapa(etapa, botao){
+  const l = ldAtual; if(!l || l.etapa === etapa || botao.disabled) return;
+  botao.disabled = true;
+  try{
+    await ldApi("POST", "/api/leads/" + encodeURIComponent(l.id) + "/etapa", { etapa });
+    l.etapa = etapa; l.etapa_em = new Date().toISOString();
+    ldDesenharEtapas(); ldDesenhar(); showToast("Etapa: " + ldNomeEtapa(etapa) + ".");
+  }catch(e){ showToast(ldMsgErro(e, "Não foi possível mudar a etapa.")); }
+  finally{ botao.disabled = false; }
+}
+window.ldExcluir = async function(){
+  const l = ldAtual, b = document.getElementById("ld-m-excluir"); if(!l || b.disabled) return;
+  if(!confirm("Excluir @" + (l.username || l.id) + " e toda a conversa guardada? Isso não pode ser desfeito. Se a pessoa escrever de novo, ela volta como lead novo.")) return;
+  b.disabled = true;
+  try{
+    await ldApi("DELETE", "/api/leads/" + encodeURIComponent(l.id));
+    ldDados.leads = ldDados.leads.filter(x => x.id !== l.id);
+    fecharModal("modal-ld-lead"); ldDesenhar(); showToast("Lead excluído.");
+  }catch(e){ showToast(ldMsgErro(e, "Não foi possível excluir.")); }
+  finally{ b.disabled = false; }
+};
+function ldInfoAlteracao(info){ return info && info.por ? "Alterado por " + info.por + " em " + new Date(info.em).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }) + "." : "Texto padrão."; }
+function ldDesenharTextos(){
+  const c = ldCfg, caixa = document.getElementById("ld-corpo"); caixa.innerHTML = "";
+  const info = document.createElement("div"); info.className = "ld-caixa";
+  info.innerHTML = "<p><b>Resposta automática:</b> sai na hora, no máximo 1 vez a cada 24h para a mesma pessoa.</p>"
+    + "<p><b>Lotes do Claude:</b> " + (c.lotes || []).join(" e ") + " (horário fixo). Para mudar, peça ao Claude.</p>"
+    + "<p><b>E-mail com os pendentes:</b> às " + (c.lotes || []).join(" e ") + " para souza.iatech@gmail.com.</p>";
+  caixa.appendChild(info);
+  const campo = (id, rot, max, valor, inf) => {
+    const d = document.createElement("div"); d.className = "field";
+    const lb = document.createElement("label"); lb.htmlFor = id; lb.textContent = rot; d.appendChild(lb);
+    const t = document.createElement("textarea"); t.id = id; t.className = "ld-txt"; t.maxLength = max; t.value = valor; d.appendChild(t);
+    const ct = document.createElement("div"); ct.className = "ld-cont"; const at = () => { ct.textContent = t.value.length + "/" + max; }; t.oninput = at; at(); d.appendChild(ct);
+    const p = document.createElement("p"); p.className = "ld-info"; p.textContent = inf; d.appendChild(p);
+    return d;
+  };
+  caixa.appendChild(campo("ld-t-publico", "Resposta pública no comentário", 300, c.publico, ldInfoAlteracao(c.publico_info)));
+  caixa.appendChild(campo("ld-t-dm", "Mensagem automática no Direct", 900, c.dm, ldInfoAlteracao(c.dm_info) + " Vai também como resposta privada a quem comenta."));
+  const s = document.createElement("button"); s.className = "btn btn-primary"; s.id = "ld-t-salvar"; s.innerHTML = '<i class="ti ti-check"></i> Salvar textos'; s.onclick = ldSalvarTextos; caixa.appendChild(s);
+  const v = document.createElement("button"); v.className = "btn btn-ghost"; v.innerHTML = '<i class="ti ti-restore"></i> Voltar ao padrão'; v.onclick = ldTextosPadrao; caixa.appendChild(v);
+}
+async function ldSalvarTextos(){
+  const b = document.getElementById("ld-t-salvar"); if(b.disabled) return;
+  const pub = document.getElementById("ld-t-publico").value.trim(), dm = document.getElementById("ld-t-dm").value.trim();
+  if(pub.length < 2){ showToast("Escreva a resposta pública."); document.getElementById("ld-t-publico").focus(); return; }
+  if(dm.length < 2){ showToast("Escreva a mensagem do Direct."); document.getElementById("ld-t-dm").focus(); return; }
+  b.disabled = true;
+  try{ await ldApi("PUT", "/api/config", { publico: pub, dm }); showToast("Textos salvos. Já valem para a próxima mensagem."); await ldCarregar(); }
+  catch(e){ showToast(ldMsgErro(e, "Não foi possível salvar.")); }
+  finally{ b.disabled = false; }
+}
+async function ldTextosPadrao(){
+  if(!confirm("Voltar os dois textos para o padrão?")) return;
+  try{ await ldApi("PUT", "/api/config", { publico: null, dm: null }); showToast("Textos de volta ao padrão."); await ldCarregar(); }
+  catch(e){ showToast(ldMsgErro(e, "Não foi possível salvar.")); }
+}
+
+/* ---------------- Usuários do Painel (só Administrador) ---------------- */
+let puLista = null, puAtual = null, puAtivoEsc = true, puSenhaMsg = "";
+window.puAbrir = async function(){
+  if(painelSocia) return ldAbrir();
+  mostrarVistaDev("usuarios");
+  const caixa = document.getElementById("pu-corpo");
+  let u = null; try{ u = await cliUsuario(); }catch(e){ /* trata abaixo */ }
+  if(!u){ cliCartaoAvisoEm(caixa, "Entre no banco das clínicas para ver os usuários do Painel.", "Entrar no Atypical & Agendas", ()=> cliAbrirEntrar()); return; }
+  await puCarregar();
+};
+async function puCarregar(){
+  const caixa = document.getElementById("pu-corpo"); caixa.innerHTML = '<p class="dev-vazio">Carregando…</p>';
+  try{ puLista = await cliQ(cliSb.from("painel_usuarios").select("*").order("nome")); }
+  catch(e){ cliCartaoAvisoEm(caixa, cliMsgErro(e, "Não foi possível carregar."), "Tentar de novo", puCarregar); return; }
+  caixa.innerHTML = "";
+  const adm = finItem("Você (" + EMAIL_DESENVOLVEDOR + ")", { t: "Administrador", c: "ok" }, "Acesso total ao Painel", "", () => showToast("O Administrador é o login de desenvolvedor."));
+  caixa.appendChild(adm);
+  puLista.forEach(x => caixa.appendChild(finItem(x.nome, x.ativo ? { t: "Sócia", c: "ok" } : { t: "Inativo", c: "neutra" }, x.email + " · Leads Instagram e Financeiro", "", () => puEditar(x))));
+  if(!puLista.length){ const p = document.createElement("p"); p.className = "dev-vazio"; p.textContent = "Nenhum outro usuário. Use “Novo usuário” para cadastrar."; caixa.appendChild(p); }
+}
+window.puNovo = function(){
+  ["pu-nome", "pu-email"].forEach(id => { document.getElementById(id).value = ""; });
+  document.getElementById("pu-perfil").value = "socia";
+  abrirModal("modal-pu-novo"); setTimeout(() => document.getElementById("pu-nome").focus(), 50);
+};
+window.puSalvarNovo = async function(){
+  const b = document.getElementById("pu-n-btn"); if(b.disabled) return;
+  const nome = document.getElementById("pu-nome").value.replace(/\s+/g, " ").trim(), email = document.getElementById("pu-email").value.trim().toLowerCase();
+  if(nome.length < 2){ showToast("Informe o nome."); document.getElementById("pu-nome").focus(); return; }
+  if(!/^[^\s@,;<>]+@[^\s@,;<>]+\.[^\s@,;<>]+$/.test(email)){ showToast("Confira o e-mail."); document.getElementById("pu-email").focus(); return; }
+  if(email === EMAIL_DESENVOLVEDOR.toLowerCase()){ showToast("Esse é o e-mail do Administrador."); return; }
+  b.disabled = true;
+  try{
+    const senha = await cliQ(cliSb.rpc("painel_criar_usuario", { p_nome: nome, p_email: email, p_perfil: document.getElementById("pu-perfil").value }));
+    fecharModal("modal-pu-novo"); puMostrarSenha(nome, email, senha); await puCarregar();
+  }catch(e){ showToast(cliMsgErro(e, "Não foi possível cadastrar.")); }
+  finally{ b.disabled = false; }
+};
+function puMostrarSenha(nome, email, senha){
+  const link = urlBaseDoApp() + "?dev";
+  document.getElementById("pu-s-txt").textContent = "Passe para " + nome + ". Ela entra em " + link + " com o e-mail " + email + " e esta senha. No primeiro acesso, cria a senha dela.";
+  document.getElementById("pu-s-cod").textContent = senha;
+  puSenhaMsg = "Oi, " + nome.split(" ")[0] + "! Seu acesso ao Painel de gestão:\n" + link + "\nE-mail: " + email + "\nSenha inicial: " + senha + "\nNo primeiro acesso você cria a sua senha.";
+  abrirModal("modal-pu-senha");
+}
+window.puCopiarSenha = async function(){
+  try{ await navigator.clipboard.writeText(puSenhaMsg); showToast("Mensagem copiada."); }catch(e){ showToast("Não deu para copiar. Anote a senha da tela."); }
+};
+function puEditar(x){
+  puAtual = x; puAtivoEsc = x.ativo;
+  document.getElementById("pu-e-sub").textContent = x.email + " · Sócia";
+  document.getElementById("pu-e-nome").value = x.nome;
+  cliSeg("pu-e-ativo", x.ativo ? "sim" : "nao");
+  abrirModal("modal-pu-editar");
+}
+window.puEscolherAtivo = function(v){ puAtivoEsc = !!v; cliSeg("pu-e-ativo", v ? "sim" : "nao"); };
+window.puSalvarEdicao = async function(){
+  const x = puAtual, b = document.getElementById("pu-e-btn"); if(!x || b.disabled) return;
+  const nome = document.getElementById("pu-e-nome").value.replace(/\s+/g, " ").trim();
+  if(nome.length < 2){ showToast("Informe o nome."); return; }
+  b.disabled = true;
+  try{
+    if(nome !== x.nome) await cliQ(cliSb.rpc("painel_usuario_nome", { p_id: x.id, p_nome: nome }));
+    if(puAtivoEsc !== x.ativo) await cliQ(cliSb.rpc("painel_usuario_ativo", { p_id: x.id, p_ativo: puAtivoEsc }));
+    fecharModal("modal-pu-editar"); showToast("Usuário salvo."); await puCarregar();
+  }catch(e){ showToast(cliMsgErro(e, "Não foi possível salvar.")); }
+  finally{ b.disabled = false; }
+};
+window.puGerarSenha = async function(){
+  const x = puAtual, b = document.getElementById("pu-e-senha"); if(!x || b.disabled) return;
+  if(!x.ativo){ showToast("Ative o usuário antes de gerar senha."); return; }
+  if(!confirm("Gerar uma senha nova para " + x.nome + "? A senha atual dela deixa de valer.")) return;
+  b.disabled = true;
+  try{ const senha = await cliQ(cliSb.rpc("painel_usuario_senha", { p_id: x.id })); fecharModal("modal-pu-editar"); puMostrarSenha(x.nome, x.email, senha); }
+  catch(e){ showToast(cliMsgErro(e, "Não foi possível gerar a senha.")); }
+  finally{ b.disabled = false; }
+};
+
+
+/* =====================================================================
    Gestão → Financeiro (v2026290001): mensalidades dos clientes (nascem do contrato, mês a mês),
    baixa com recibo por e-mail, despesas rápidas com categorias e resumo do mês.
    Banco: painel_mensalidades, painel_recebimentos, painel_despesas, painel_despesa_categorias (só o desenvolvedor).
@@ -5143,8 +5576,8 @@ window.finAbrir = async function(){
   if(finDados){ finDesenhar(); return; }
   caixa.innerHTML = '<p class="dev-vazio">Carregando…</p>';
   let user = null;
-  try{ user = await cliUsuario(); }catch(e){ /* trata abaixo */ }
-  if(!user){ cliCartaoAvisoEm(caixa, "Entre no banco das clínicas para ver o financeiro.", "Entrar no Atypical & Agendas", ()=> cliAbrirEntrar()); return; }
+  try{ user = await cliUsuarioPainel(); }catch(e){ /* trata abaixo */ }
+  if(!user){ if(painelSocia){ cliCartaoAvisoEm(caixa, "Sua sessão terminou. Entre de novo.", "Entrar", ()=> fazerLogout()); return; } cliCartaoAvisoEm(caixa, "Entre no banco das clínicas para ver o financeiro.", "Entrar no Atypical & Agendas", ()=> cliAbrirEntrar()); return; }
   try{
     // Mensalidades nascem do contrato, mês a mês (o banco não duplica)
     if(!finGerou){ await cliQ(cliSb.rpc("painel_gerar_mensalidades")); finGerou = true; }
