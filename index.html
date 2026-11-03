@@ -2463,7 +2463,7 @@
     <h3>Novo usuário do Painel</h3>
     <div class="field"><label for="pu-nome">Nome *</label><input type="text" id="pu-nome" maxlength="120" autocomplete="off"></div>
     <div class="field"><label for="pu-email">E-mail de login *</label><input type="email" id="pu-email" maxlength="120" autocomplete="off"></div>
-    <div class="field"><label for="pu-perfil">Perfil *</label><select id="pu-perfil"><option value="socia">Sócia — Leads Instagram e Financeiro (acesso total)</option></select></div>
+    <div class="field"><label for="pu-perfil">Perfil *</label><select id="pu-perfil"><option value="socia">Sócia Atypical — Leads Instagram e Financeiro (acesso total)</option></select></div>
     <p class="ld-info" style="margin:-4px 0 12px;">O sistema gera uma senha inicial de 6 números. No primeiro acesso a pessoa cria a senha dela.</p>
     <button class="btn btn-primary btn-linha" id="pu-n-btn" onclick="puSalvarNovo()"><i class="ti ti-check"></i> Cadastrar</button>
     <button class="btn btn-ghost btn-linha" onclick="fecharModal('modal-pu-novo')">Cancelar</button>
@@ -5475,7 +5475,7 @@ async function puCarregar(){
   caixa.innerHTML = "";
   const adm = finItem("Você (" + EMAIL_DESENVOLVEDOR + ")", { t: "Administrador", c: "ok" }, "Acesso total ao Painel", "", () => showToast("O Administrador é o login de desenvolvedor."));
   caixa.appendChild(adm);
-  puLista.forEach(x => caixa.appendChild(finItem(x.nome, x.ativo ? { t: "Sócia", c: "ok" } : { t: "Inativo", c: "neutra" }, x.email + " · Leads Instagram e Financeiro", "", () => puEditar(x))));
+  puLista.forEach(x => caixa.appendChild(finItem(x.nome, x.ativo ? { t: "Sócia Atypical", c: "ok" } : { t: "Inativo", c: "neutra" }, x.email + " · Leads Instagram e Financeiro", "", () => puEditar(x))));
   if(!puLista.length){ const p = document.createElement("p"); p.className = "dev-vazio"; p.textContent = "Nenhum outro usuário. Use “Novo usuário” para cadastrar."; caixa.appendChild(p); }
 }
 window.puNovo = function(){
@@ -5508,7 +5508,7 @@ window.puCopiarSenha = async function(){
 };
 function puEditar(x){
   puAtual = x; puAtivoEsc = x.ativo;
-  document.getElementById("pu-e-sub").textContent = x.email + " · Sócia";
+  document.getElementById("pu-e-sub").textContent = x.email + " · Sócia Atypical";
   document.getElementById("pu-e-nome").value = x.nome;
   cliSeg("pu-e-ativo", x.ativo ? "sim" : "nao");
   abrirModal("modal-pu-editar");
